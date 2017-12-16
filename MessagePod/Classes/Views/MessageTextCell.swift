@@ -16,10 +16,11 @@ open class MessageTextCell: UITableViewCell {
         return imageView
     }()
     
-    open var textView: UITextView = {
+    open lazy var messageTextView: UITextView = {
         let textView = UITextView()
         textView.font = UIFont.systemFont(ofSize: 14)
         textView.textColor = UIColor.darkGray
+        textView.isEditable = false
         return textView
     }()
     
@@ -27,7 +28,7 @@ open class MessageTextCell: UITableViewCell {
     open var message: Message? {
         didSet {
             if let message = self.message {
-                self.textView.text = message.text
+                self.messageTextView.attributedText = message.attributeText
             }
         }
     }
@@ -37,8 +38,8 @@ open class MessageTextCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.selectionStyle = .none
-        
         self.contentView.addSubview(self.bubbleImageView)
+        self.bubbleImageView.addSubview(self.messageTextView)
     
         if let path = Bundle.imagePath(for: "bubble_out@2x") {
             self.bubbleImageView.image = UIImage.init(contentsOfFile: path)?.stretch()
@@ -51,9 +52,9 @@ open class MessageTextCell: UITableViewCell {
     
     open override func layoutSubviews() {
         super.layoutSubviews()
-        self.bubbleImageView.frame = CGRect.init(x: 15, y: 5, width: 240, height: self.frame.height - 10)
+        self.bubbleImageView.frame = CGRect.init(x: 15, y: 10, width: 240, height: self.frame.height - 20)
 
-        self.textView.frame = CGRect.init(x: 15, y: 5, width: 240, height: self.frame.height - 10)
+        self.messageTextView.frame = CGRect.init(x: 5, y: 5, width: self.bubbleImageView.frame.width - 10, height: self.bubbleImageView.frame.height - 10)
     }
     
 }

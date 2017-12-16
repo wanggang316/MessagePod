@@ -22,6 +22,8 @@ open class MessageViewController: UIViewController {
         
         self.messagesTableView.dataSource = self
         self.messagesTableView.delegate = self
+        self.messagesTableView.tableFooterView = UIView()
+        
         self.view.addSubview(self.messagesTableView)
         
         self.messagesTableView.register(MessageTextCell.self, forCellReuseIdentifier: "cell")
@@ -75,21 +77,38 @@ extension MessageViewController: UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MessageTextCell
+        if let messages = self.messages {
+            cell.message = messages[indexPath.row]
+        }
         return cell
     }
 }
 
 extension MessageViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.row {
-        case 0: return 60
-        case 1: return 90
-        case 2: return 80
-        case 3: return 120
-        case 4: return 70
-        case 5: return 40
-        default:
-            return 60
+        
+        if let messages = self.messages {
+            let message = messages[indexPath.row]
+            let atrributeString = NSMutableAttributedString.init(string: message.text)
+            let range = NSRange(location: 0, length: message.text.count)
+            atrributeString.addAttribute(NSAttributedStringKey.font, value: UIFont.systemFont(ofSize: 14), range: range)
+            atrributeString.addAttribute(.link, value: UIFont.systemFont(ofSize: 14), range: range)
+
+            let height = atrributeString.height(considering: 240 - 10)
+//            let height = message.text.height(considering: 240 - 10, and: UIFont.systemFont(ofSize: 14))
+            return height + 30
         }
+        return 0
+//
+//        switch indexPath.row {
+//        case 0: return 60
+//        case 1: return 90
+//        case 2: return 80
+//        case 3: return 120
+//        case 4: return 70
+//        case 5: return 40
+//        default:
+//            return 60
+//        }
     }
 }

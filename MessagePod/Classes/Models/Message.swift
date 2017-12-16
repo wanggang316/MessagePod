@@ -9,10 +9,11 @@ import Foundation
 
 public struct Message {
 //    public let sender: Sender
-    public var text: String
+//    public var text: String
+    public var attributeText: NSAttributedString
     
-    public init(text: String) {
-        self.text = text
+    public init(attributeText: NSAttributedString) {
+        self.attributeText = text
     }
     
 }
