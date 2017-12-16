@@ -8,5 +8,11 @@
 import Foundation
 
 public struct Message {
-    let sender: Sender
+//    public let sender: Sender
+    public var text: String
+    
+    public init(text: String) {
+        self.text = text
+    }
+    
 }

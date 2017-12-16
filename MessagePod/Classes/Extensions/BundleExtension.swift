@@ -18,4 +18,12 @@ extension Bundle {
         }
         return resourceBundle
     }
+    
+    static func imagePath(for imageName: String, withEextension ext: String? = "png") -> String? {
+        let assetBundle = Bundle.messagePodBundle()
+        guard let path = assetBundle.path(forResource: imageName, ofType: ext, inDirectory: "images") else {
+            fatalError("MessagePod: Could not find the image")
+        }
+        return path
+    }
 }

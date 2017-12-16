@@ -76,5 +76,16 @@ extension MessageViewController: UITableViewDataSource {
 }
 
 extension MessageViewController: UITableViewDelegate {
-    
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.row {
+        case 0: return 60
+        case 1: return 90
+        case 2: return 80
+        case 3: return 120
+        case 4: return 70
+        case 5: return 40
+        default:
+            return 60
+        }
+    }
 }

@@ -13,7 +13,7 @@ EXTERNAL SOURCES:
     :path: ../MessagePod.podspec
 
 SPEC CHECKSUMS:
-  MessagePod: 6d4e2c43b44059487059c0cb060ad081f8157bc8
+  MessagePod: ff5c1977b373e847f4ae6b0cb28fdb8a3f0ba00d
   Nimble: 7f5a9c447a33002645a071bddafbfb24ea70e0ac
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
 

@@ -9,28 +9,39 @@ import UIKit
 
 open class MessageTextCell: UITableViewCell {
 
-    open var bubbleImageView: UIImageView = {
+    open lazy var bubbleImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = UIViewContentMode.scaleAspectFill
         return imageView
+    }()
+    
+    open var textView: UITextView = {
+        let textView = UITextView()
+        textView.font = UIFont.systemFont(ofSize: 14)
+        textView.textColor = UIColor.darkGray
+        return textView
     }()
     
     public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        self.selectionStyle = .none
+        
         self.contentView.addSubview(self.bubbleImageView)
-        
-        self.bubbleImageView.frame = CGRect.init(x: 0, y: 0, width: 200, height: 50)
-        
-        let assetBundle = Bundle.messagePodBundle()
-        if let imagePath = assetBundle.path(forResource: "bubble_out", ofType: "png", inDirectory: "images") {
-            self.bubbleImageView.image = UIImage.init(contentsOfFile: imagePath)
+    
+        if let path = Bundle.imagePath(for: "bubble_out@2x") {
+            self.bubbleImageView.image = UIImage.init(contentsOfFile: path)?.stretch()
         }
-        
     }
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        self.bubbleImageView.frame = CGRect.init(x: 15, y: 5, width: 240, height: self.frame.height - 10)
+
+        self.textView.frame = CGRect.init(x: 15, y: 5, width: 240, height: self.frame.height - 10)
     }
     
 }

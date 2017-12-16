@@ -15,7 +15,12 @@
     "git": "https://github.com/wanggang316/MessagePod.git",
     "tag": "0.0.1"
   },
-  "source_files": "MessagePod/Classes/**/*.swift",
+  "source_files": "MessagePod/Classes/**/*",
+  "ios": {
+    "resource_bundles": {
+      "MessagePodAssets": "Assets/MessagePodAssets.bundle/images"
+    }
+  },
   "pod_target_xcconfig": {
     "SWIFT_VERSION": "4.0"
   },

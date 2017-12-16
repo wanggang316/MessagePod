@@ -8,8 +8,8 @@
 import Foundation
 
 public struct Sender {
-    let id: String
-    let name: String
+    open let id: String
+    open let name: String
 }
 
 extension Sender: Equatable {
