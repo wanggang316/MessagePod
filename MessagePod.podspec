@@ -12,7 +12,7 @@ s.social_media_url        = 'https://twitter.com/wgang316'
 s.source                  = { :git => 'https://github.com/wanggang316/MessagePod.git', :tag => s.version.to_s }
 
 
-s.source_files             = 'MessagePod/Classes/**/*.swift'
+s.source_files             = 'MessagePod/Classes/**/*'
 
 s.pod_target_xcconfig      = {
     'SWIFT_VERSION' => '4.0',
