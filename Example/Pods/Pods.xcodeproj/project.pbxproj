@@ -21,13 +21,12 @@
 		1F23AB644BEE952CFF632DCD92B743CC /* MessageViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB6CAFCE850244E6A8D3BB7F4E231B1 /* MessageViewDelegate.swift */; };
 		21B18399E87D0EF8B2A5964507CFFC88 /* Closures.swift in Sources */ = {isa = PBXBuildFile; fileRef = D685C0D509328CD8778F99DD53A49A48 /* Closures.swift */; };
 		22E9F6FA56858A5F7A5D664E5968ECB0 /* NMBExceptionCapture.h in Headers */ = {isa = PBXBuildFile; fileRef = 88CCA655A571DD68102067AFB473BD77 /* NMBExceptionCapture.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2337F2641FE579CE00E8A0C5 /* MessagePodAssets.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2337F2631FE579CD00E8A0C5 /* MessagePodAssets.bundle */; };
-		2337F26E1FE584A900E8A0C5 /* ActiveLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2337F2671FE584A900E8A0C5 /* ActiveLabel.swift */; };
-		2337F26F1FE584A900E8A0C5 /* RegexParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2337F2681FE584A900E8A0C5 /* RegexParser.swift */; };
-		2337F2701FE584A900E8A0C5 /* StringTrimExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2337F2691FE584A900E8A0C5 /* StringTrimExtension.swift */; };
-		2337F2711FE584A900E8A0C5 /* ActiveBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2337F26A1FE584A900E8A0C5 /* ActiveBuilder.swift */; };
-		2337F2721FE584A900E8A0C5 /* ActiveType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2337F26B1FE584A900E8A0C5 /* ActiveType.swift */; };
-		2337F2731FE584A900E8A0C5 /* ActiveLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 2337F26C1FE584A900E8A0C5 /* ActiveLabel.h */; };
+		236B5C661FE58C1A00343EBB /* ActiveLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236B5C601FE58C1A00343EBB /* ActiveLabel.swift */; };
+		236B5C671FE58C1A00343EBB /* RegexParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236B5C611FE58C1A00343EBB /* RegexParser.swift */; };
+		236B5C681FE58C1A00343EBB /* StringTrimExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236B5C621FE58C1A00343EBB /* StringTrimExtension.swift */; };
+		236B5C691FE58C1A00343EBB /* ActiveBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236B5C631FE58C1A00343EBB /* ActiveBuilder.swift */; };
+		236B5C6A1FE58C1A00343EBB /* ActiveType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236B5C641FE58C1A00343EBB /* ActiveType.swift */; };
+		236B5C6B1FE58C1A00343EBB /* ActiveLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 236B5C651FE58C1A00343EBB /* ActiveLabel.h */; };
 		23CCCB988A6F64934B216069B06BD456 /* Quick.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C846417EADDAAFF733CF6AC8FEB5EEA /* Quick.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		25D1805055756CAA69A167CA03B2465C /* ContainElementSatisfying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD6CC02AD6D4C0E7D1169EF9ECB3706 /* ContainElementSatisfying.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		25D977E49A2DB436BE124A0864E783EC /* Behavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C1D1A0D20C667FAF4F01C3BA4AC451 /* Behavior.swift */; };
@@ -198,13 +197,12 @@
 		2192785265D796ADAF8B5DE3C97DD4CE /* NMBExpectation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NMBExpectation.swift; path = Sources/Nimble/Adapters/NMBExpectation.swift; sourceTree = "<group>"; };
 		2294B6CCB2D8D93AE1F605AAA6A03240 /* DSL.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DSL.h; path = Sources/NimbleObjectiveC/DSL.h; sourceTree = "<group>"; };
 		22B7867A85F82AA4EEEB32AAEB2C8684 /* Pods-MessagePod_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MessagePod_Example-acknowledgements.plist"; sourceTree = "<group>"; };
-		2337F2631FE579CD00E8A0C5 /* MessagePodAssets.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MessagePodAssets.bundle; sourceTree = "<group>"; };
-		2337F2671FE584A900E8A0C5 /* ActiveLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveLabel.swift; sourceTree = "<group>"; };
-		2337F2681FE584A900E8A0C5 /* RegexParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexParser.swift; sourceTree = "<group>"; };
-		2337F2691FE584A900E8A0C5 /* StringTrimExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringTrimExtension.swift; sourceTree = "<group>"; };
-		2337F26A1FE584A900E8A0C5 /* ActiveBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveBuilder.swift; sourceTree = "<group>"; };
-		2337F26B1FE584A900E8A0C5 /* ActiveType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveType.swift; sourceTree = "<group>"; };
-		2337F26C1FE584A900E8A0C5 /* ActiveLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActiveLabel.h; sourceTree = "<group>"; };
+		236B5C601FE58C1A00343EBB /* ActiveLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveLabel.swift; sourceTree = "<group>"; };
+		236B5C611FE58C1A00343EBB /* RegexParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexParser.swift; sourceTree = "<group>"; };
+		236B5C621FE58C1A00343EBB /* StringTrimExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringTrimExtension.swift; sourceTree = "<group>"; };
+		236B5C631FE58C1A00343EBB /* ActiveBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveBuilder.swift; sourceTree = "<group>"; };
+		236B5C641FE58C1A00343EBB /* ActiveType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveType.swift; sourceTree = "<group>"; };
+		236B5C651FE58C1A00343EBB /* ActiveLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActiveLabel.h; sourceTree = "<group>"; };
 		240CEA0915AA3241F6A49CB65CEC8767 /* NimbleXCTestHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NimbleXCTestHandler.swift; path = Sources/Nimble/Adapters/NimbleXCTestHandler.swift; sourceTree = "<group>"; };
 		24FAA89E2AC44E204B5E39B77BD6B921 /* NMBExceptionCapture.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = NMBExceptionCapture.m; path = Sources/NimbleObjectiveC/NMBExceptionCapture.m; sourceTree = "<group>"; };
 		24FAED8BD878439BC32BE461165E4E08 /* ErrorUtility.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ErrorUtility.swift; path = Sources/Quick/ErrorUtility.swift; sourceTree = "<group>"; };
@@ -413,32 +411,24 @@
 			path = "Example/Pods/Target Support Files/MessagePod";
 			sourceTree = "<group>";
 		};
-		2337F2621FE579CD00E8A0C5 /* Assets */ = {
+		236B5C5E1FE58C1A00343EBB /* Verdor */ = {
 			isa = PBXGroup;
 			children = (
-				2337F2631FE579CD00E8A0C5 /* MessagePodAssets.bundle */,
+				236B5C5F1FE58C1A00343EBB /* ActiveLabel */,
 			);
-			name = Assets;
-			path = MessagePod/Assets;
+			name = Verdor;
+			path = MessagePod/Classes/Verdor;
 			sourceTree = "<group>";
 		};
-		2337F2651FE5849D00E8A0C5 /* Verdor */ = {
+		236B5C5F1FE58C1A00343EBB /* ActiveLabel */ = {
 			isa = PBXGroup;
 			children = (
-				2337F2661FE584A900E8A0C5 /* ActiveLabel */,
-			);
-			path = Verdor;
-			sourceTree = "<group>";
-		};
-		2337F2661FE584A900E8A0C5 /* ActiveLabel */ = {
-			isa = PBXGroup;
-			children = (
-				2337F2671FE584A900E8A0C5 /* ActiveLabel.swift */,
-				2337F2681FE584A900E8A0C5 /* RegexParser.swift */,
-				2337F2691FE584A900E8A0C5 /* StringTrimExtension.swift */,
-				2337F26A1FE584A900E8A0C5 /* ActiveBuilder.swift */,
-				2337F26B1FE584A900E8A0C5 /* ActiveType.swift */,
-				2337F26C1FE584A900E8A0C5 /* ActiveLabel.h */,
+				236B5C601FE58C1A00343EBB /* ActiveLabel.swift */,
+				236B5C611FE58C1A00343EBB /* RegexParser.swift */,
+				236B5C621FE58C1A00343EBB /* StringTrimExtension.swift */,
+				236B5C631FE58C1A00343EBB /* ActiveBuilder.swift */,
+				236B5C641FE58C1A00343EBB /* ActiveType.swift */,
+				236B5C651FE58C1A00343EBB /* ActiveLabel.h */,
 			);
 			path = ActiveLabel;
 			sourceTree = "<group>";
@@ -456,8 +446,7 @@
 		325AB7621D22DE36546BDE72EF300AC6 /* MessagePod */ = {
 			isa = PBXGroup;
 			children = (
-				2337F2651FE5849D00E8A0C5 /* Verdor */,
-				2337F2621FE579CD00E8A0C5 /* Assets */,
+				236B5C5E1FE58C1A00343EBB /* Verdor */,
 				F6152D49A57BFBFF38D5F29C52014251 /* Controllers */,
 				C01387B854E0BF5705581173174FED35 /* Extensions */,
 				9D62F4A340CA59F39A3DE09B6D3F8DB1 /* Models */,
@@ -815,7 +804,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0FCEBAAF5E6C2146824A14CDDB725278 /* MessagePod-umbrella.h in Headers */,
-				2337F2731FE584A900E8A0C5 /* ActiveLabel.h in Headers */,
+				236B5C6B1FE58C1A00343EBB /* ActiveLabel.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -972,7 +961,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2337F2641FE579CE00E8A0C5 /* MessagePodAssets.bundle in Resources */,
 				71172B2C3A6D66E42316A8241B921570 /* MessagePodAssets.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1101,17 +1089,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				A36FBE2EF6AD3AEF34CDAC5B9B705B1C /* AttributeStringExtension.swift in Sources */,
-				2337F2721FE584A900E8A0C5 /* ActiveType.swift in Sources */,
-				2337F2711FE584A900E8A0C5 /* ActiveBuilder.swift in Sources */,
+				236B5C6A1FE58C1A00343EBB /* ActiveType.swift in Sources */,
+				236B5C691FE58C1A00343EBB /* ActiveBuilder.swift in Sources */,
 				18AC4A59E32D7B9EA36918D21E25D34D /* BundleExtension.swift in Sources */,
-				2337F26F1FE584A900E8A0C5 /* RegexParser.swift in Sources */,
+				236B5C671FE58C1A00343EBB /* RegexParser.swift in Sources */,
 				6602157A54D339FDC1BBD7A90994E78E /* ImageExtension.swift in Sources */,
 				5867E131F128A6231F25F35003C77889 /* Message.swift in Sources */,
 				F7D4C37C3C3F391CA26657CD48BEBFA8 /* MessagePod-dummy.m in Sources */,
 				A9E795DFB9560A517F8419340108AA4D /* MessageTableView.swift in Sources */,
-				2337F26E1FE584A900E8A0C5 /* ActiveLabel.swift in Sources */,
+				236B5C661FE58C1A00343EBB /* ActiveLabel.swift in Sources */,
 				E01EEA2D5296776E4598145B3371B4FB /* MessageTextCell.swift in Sources */,
-				2337F2701FE584A900E8A0C5 /* StringTrimExtension.swift in Sources */,
+				236B5C681FE58C1A00343EBB /* StringTrimExtension.swift in Sources */,
 				8044B3BCD24C90B53CC228E45D6453E6 /* MessageViewController.swift in Sources */,
 				46434D3DC22838FE775F2D196D1F2D70 /* MessageViewDataSource.swift in Sources */,
 				1F23AB644BEE952CFF632DCD92B743CC /* MessageViewDelegate.swift in Sources */,
