@@ -1,9 +1,8 @@
 {
   "name": "MessagePod",
-  "version": "0.1.0",
-  "summary": "A short description of MessagePod.",
-  "description": "TODO: Add long description of the pod here.",
-  "homepage": "https://github.com/gump/MessagePod",
+  "version": "0.0.1",
+  "summary": "A fast, customizable message UI Library.",
+  "homepage": "https://github.com/wanggang316/MessagePod",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
@@ -11,12 +10,16 @@
   "authors": {
     "gump": "1989wg@gmail.com"
   },
+  "social_media_url": "https://twitter.com/wgang316",
   "source": {
-    "git": "https://github.com/gump/MessagePod.git",
-    "tag": "0.1.0"
+    "git": "https://github.com/wanggang316/MessagePod.git",
+    "tag": "0.0.1"
+  },
+  "source_files": "MessagePod/Classes/**/*.swift",
+  "pod_target_xcconfig": {
+    "SWIFT_VERSION": "4.0"
   },
   "platforms": {
-    "ios": "8.0"
-  },
-  "source_files": "MessagePod/Classes/**/*"
+    "ios": "9.0"
+  }
 }

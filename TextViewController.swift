@@ -1,19 +1,17 @@
 //
-//  ConversationViewController.swift
-//  MessageUI_Example
+//  TextViewController.swift
+//  MessagePod
 //
-//  Created by gang wang on 15/12/2017.
-//  Copyright © 2017 CocoaPods. All rights reserved.
+//  Created by gang wang on 16/12/2017.
 //
 
 import UIKit
-import MessagePod
 
-class ConversationViewController: textviewc {
+class TextViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Do any additional setup after loading the view.
     }
 

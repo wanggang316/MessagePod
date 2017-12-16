@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MessagePod
 
 class ViewController: UITableViewController {
     
@@ -58,7 +59,7 @@ class ViewController: UITableViewController {
         let cell = cells[indexPath.row]
         switch cell {
         case "Example":
-//            navigationController?.pushViewController(ConversationViewController(), animated: true)
+            navigationController?.pushViewController(ConversationViewController(), animated: true)
         default:
             assertionFailure("You need to impliment the action for this cell: \(cell)")
             return

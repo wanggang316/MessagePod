@@ -1,12 +1,12 @@
 use_frameworks!
 
 target 'MessagePod_Example' do
-  pod 'MessagePod', :path => '../'
+  pod 'MessagePod', :path => '../MessagePod.podspec'
 
   target 'MessagePod_Tests' do
     inherit! :search_paths
 
     pod 'Quick', '~> 1.2.0'
-  pod 'Nimble', '~> 7.0.2'
+    pod 'Nimble', '~> 7.0.2'
   end
 end
