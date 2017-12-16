@@ -13,6 +13,10 @@ open class MessageViewController: UIViewController {
     
     open var messagesTableView = MessageTableView()
 
+    
+    // MARK: - Properties
+    open var messages: [Message]?
+    
     override open func viewDidLoad() {
         super.viewDidLoad()
         
@@ -66,7 +70,7 @@ extension MessageViewController: UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return self.messages?.count ?? 0
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

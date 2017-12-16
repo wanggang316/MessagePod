@@ -11,6 +11,8 @@ import MessagePod
 
 class ConversationViewController: MessageViewController {
 
+    override var messages: [Message]? = MessageData.messages
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

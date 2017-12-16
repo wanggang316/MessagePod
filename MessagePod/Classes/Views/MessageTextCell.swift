@@ -9,6 +9,8 @@ import UIKit
 
 open class MessageTextCell: UITableViewCell {
 
+    // MARK: - UI Elements
+    
     open lazy var bubbleImageView: UIImageView = {
         let imageView = UIImageView()
         return imageView
@@ -20,6 +22,16 @@ open class MessageTextCell: UITableViewCell {
         textView.textColor = UIColor.darkGray
         return textView
     }()
+    
+    // MARK: - Properties
+    open var message: Message? {
+        didSet {
+            if let message = self.message {
+                self.textView.text = message.text
+            }
+        }
+    }
+    
     
     public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
