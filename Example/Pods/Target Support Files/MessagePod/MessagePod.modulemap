@@ -1,0 +1,6 @@
+framework module MessagePod {
+  umbrella header "MessagePod-umbrella.h"
+
+  export *
+  module * { export * }
+}
