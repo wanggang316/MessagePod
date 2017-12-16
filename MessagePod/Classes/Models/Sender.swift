@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Sender {
+public struct Sender {
     let id: String
     let name: String
 }

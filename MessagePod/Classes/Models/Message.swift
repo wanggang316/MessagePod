@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct Message {
+public struct Message {
     let sender: Sender
 }

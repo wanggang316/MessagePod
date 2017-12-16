@@ -7,24 +7,24 @@
 
 import UIKit
 
-class MessageViewController: UIViewController {
+open class MessageViewController: UIViewController {
 
     // MARK: - UI Elements
     
     open var messagesTableView = MessageTableView()
 
-    override func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         
-        self.setupConstraints()
         self.messagesTableView.dataSource = self
         self.messagesTableView.delegate = self
         self.view.addSubview(self.messagesTableView)
         
-        self.messagesTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        self.messagesTableView.register(MessageTextCell.self, forCellReuseIdentifier: "cell")
+        self.setupConstraints()
     }
 
-    override func didReceiveMemoryWarning() {
+    override open func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
@@ -61,16 +61,16 @@ class MessageViewController: UIViewController {
 }
 
 extension MessageViewController: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
+    public func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 10
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MessageTextCell
         return cell
     }
 }

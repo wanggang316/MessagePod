@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MessageTableView: UITableView {
+open class MessageTableView: UITableView {
 
 
 

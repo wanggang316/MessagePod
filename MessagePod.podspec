@@ -13,6 +13,8 @@ s.source                  = { :git => 'https://github.com/wanggang316/MessagePod
 
 
 s.source_files             = 'MessagePod/Classes/**/*'
+s.ios.resource_bundle     = { 'MessagePodAssets' => 'Assets/MessagePodAssets.bundle/images' }
+
 
 s.pod_target_xcconfig      = {
     'SWIFT_VERSION' => '4.0',
