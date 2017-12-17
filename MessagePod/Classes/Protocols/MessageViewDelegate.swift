@@ -11,9 +11,7 @@ public protocol MessageViewDelegate: AnyObject {
     
 //    var layoutAttributes: [String: CGSize]
     
-    func height(of row: Int) -> CGFloat
-    
-    
+//    func height(of indexPath: IndexPath) -> CGFloat
     
     // MARK: - layout
     

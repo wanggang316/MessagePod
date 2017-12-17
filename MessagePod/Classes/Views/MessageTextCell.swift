@@ -31,22 +31,18 @@ open class MessageTextCell: UITableViewCell {
 //        return textView
 //    }()
     
+    open lazy var avatarImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = UIViewContentMode.scaleAspectFill
+        return imageView
+    }()
+    
     open lazy var messageLabel: ActiveLabel = {
         let label = ActiveLabel()
         
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .black
-//        label.enabledTypes = [.mention, .hashtag, .url]
-//        label.handleHashtagTap { hashtag in
-//            print("Success. You just tapped the \(hashtag) hashtag")
-//        }
-//        label.handleURLTap({ url in
-//            UIApplication.shared.openURL(url)
-//        })
-//        label.handleMentionTap { userHandle in
-//            print("\(userHandle) tapped")
-//        }
         return label
     }()
     
@@ -54,13 +50,11 @@ open class MessageTextCell: UITableViewCell {
     open var message: Message? {
         didSet {
             if let message = self.message {
-//                self.messageTextView.attributedText = message.attributeText
-               
+
+                self.avatarImageView.image = message.sender.image
                 
                 if let actions = message.actions {
-                    
                     var types = self.messageLabel.enabledTypes
-
                     for (key, value) in actions {
                         let customType = ActiveType.custom(pattern: key)
 
@@ -80,6 +74,14 @@ open class MessageTextCell: UITableViewCell {
         }
     }
     
+    var layoutAttributes: MessageCellLayoutAttributes? {
+        didSet {
+            if let _ = layoutAttributes {
+                self.layoutSubviews()
+            }
+        }
+    }
+    
     
     public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -88,6 +90,8 @@ open class MessageTextCell: UITableViewCell {
         self.contentView.addSubview(self.bubbleImageView)
         self.bubbleImageView.addSubview(self.messageLabel)
     
+        self.contentView.addSubview(self.avatarImageView)
+        
         if let path = Bundle.imagePath(for: "bubble_out@2x") {
             self.bubbleImageView.image = UIImage.init(contentsOfFile: path)?.stretch()
         }
@@ -99,15 +103,13 @@ open class MessageTextCell: UITableViewCell {
     
     open override func layoutSubviews() {
         super.layoutSubviews()
-        self.bubbleImageView.frame = CGRect.init(x: 15, y: 10, width: 240, height: self.frame.height - 20)
-        self.messageLabel.frame = CGRect.init(x: 5, y: 5, width: self.bubbleImageView.frame.width - 10, height: self.bubbleImageView.frame.height - 10)
+        
+        if let attributes = self.layoutAttributes {
+            self.bubbleImageView.frame = attributes.messageContainerFrame
+            self.messageLabel.frame = CGRect.init(x: attributes.messageLabelInsets.left, y: attributes.messageLabelInsets.top, width: attributes.messageContainerFrame.width - attributes.messageLabelInsets.left - attributes.messageLabelInsets.right, height: attributes.messageContainerFrame.height - attributes.messageLabelInsets.top - attributes.messageLabelInsets.bottom)
+            self.avatarImageView.frame = attributes.avatarFrame
+        }
     }
-    
 }
 
-//extension MessageTextCell: UITextViewDelegate {
-//    public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
-//        return true
-//    }
-//}
 

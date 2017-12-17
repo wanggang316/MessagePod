@@ -9,8 +9,8 @@ import Foundation
 
 public protocol MessageViewDataSource: AnyObject {
     
-    func number(of row: Int) -> Int
+    func numberofRows(in messageTableView: MessageTableView) -> Int
     
-    func messageForItem(at indexPath: IndexPath, in messageTableView: MessageTableView) -> Message
+    func messageForItem(at indexPath: IndexPath, in messageTableView: MessageTableView) -> Message?
 
 }

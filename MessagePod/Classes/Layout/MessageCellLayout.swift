@@ -36,7 +36,9 @@ open class MessageCellLayout: NSObject {
     
     func messageCellLayoutAttributes(for indexPath: IndexPath) -> MessageCellLayoutAttributes {
         
-        let message = messageDataSource.messageForItem(at: indexPath, in: messageTableView!)
+        guard let message = messageDataSource.messageForItem(at: indexPath, in: messageTableView!) else {
+            fatalError("MessageCellLayout messageCellLayoutAttributes message is nil.")
+        }
         
         if let attributes = messageCellAttributes[String(message.text.hashValue)] {
             return attributes
@@ -136,7 +138,7 @@ extension MessageCellLayout {
     func messageContainerSize(for attributes: MessageCellLayoutAttributes) -> CGSize {
         
         let message = attributes.message
-        let indexPath = attributes.indexPath
+//        let indexPath = attributes.indexPath
         let maxWidth = attributes.messageContainerMaxWidth
         
         var messageContainerSize: CGSize = .zero
