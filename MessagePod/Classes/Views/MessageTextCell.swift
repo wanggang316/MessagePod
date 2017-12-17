@@ -38,8 +38,8 @@ open class MessageTextCell: UITableViewCell {
         return imageView
     }()
     
-    open lazy var messageLabel: ActiveLabel = {
-        let label = ActiveLabel()
+    open lazy var messageLabel: UILabel = {
+        let label = UILabel()
         
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 14)
@@ -54,34 +54,46 @@ open class MessageTextCell: UITableViewCell {
 
                 self.avatarImageView.image = message.sender.image
                 
-                if let actions = message.actions {
-                    var types = self.messageLabel.enabledTypes
-                    for (key, value) in actions {
-                        let customType = ActiveType.custom(pattern: key)
-
-                        self.messageLabel.customColor[customType] = UIColor.purple
-                        self.messageLabel.customSelectedColor[customType] = UIColor.green
-                        
-                        self.messageLabel.handleCustomTap(for: customType) { element in
-                            print("\(element): \(value) tapped")
-                        }
-                        types.append(customType)
-                    }
-                    self.messageLabel.enabledTypes = types
-                }
+//                if let actions = message.actions {
+//                    var types = self.messageLabel.enabledTypes
+//                    for (key, value) in actions {
+//                        let customType = ActiveType.custom(pattern: key)
+//
+//                        self.messageLabel.customColor[customType] = UIColor.purple
+//                        self.messageLabel.customSelectedColor[customType] = UIColor.green
+//                        
+//                        self.messageLabel.handleCustomTap(for: customType) { element in
+//                            print("\(element): \(value) tapped")
+//                        }
+//                        types.append(customType)
+//                    }
+//                    self.messageLabel.enabledTypes = types
+//                }
                 
                self.messageLabel.text = message.text
             }
         }
     }
     
-    var layoutAttributes: MessageCellLayoutAttributes? {
-        didSet {
-            if let _ = layoutAttributes {
-                self.layoutSubviews()
-            }
+    var layoutAttributes: MessageCellLayoutAttributes?
+    
+    func configCell(with newMessage: Message, attributes: MessageCellLayoutAttributes, bubbleImage: UIImage) {
+        if (self.message == nil) || (newMessage != self.message!) {
+            self.message = newMessage
+            self.layoutAttributes = attributes
+            self.bubbleImageView.image = bubbleImage
+            
+//            if let attributes = self.layoutAttributes {
+                self.bubbleImageView.frame = attributes.messageContainerFrame
+                self.messageLabel.frame = CGRect.init(x: attributes.messageLabelInsets.left, y: attributes.messageLabelInsets.top, width: attributes.messageContainerFrame.width - attributes.messageLabelInsets.left - attributes.messageLabelInsets.right, height: attributes.messageContainerFrame.height - attributes.messageLabelInsets.top - attributes.messageLabelInsets.bottom)
+                self.avatarImageView.frame = attributes.avatarFrame
+                //                    self.avatarImageView.layer.cornerRadius = attributes.avatarFrame.width / 2
+//            }
         }
+//        self.layoutSubviews()
     }
+    
+    var bubbleImage: UIImage?
     
     
     public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -92,10 +104,8 @@ open class MessageTextCell: UITableViewCell {
         self.bubbleImageView.addSubview(self.messageLabel)
     
         self.contentView.addSubview(self.avatarImageView)
-        
-        if let path = Bundle.imagePath(for: "bubble_out@2x") {
-            self.bubbleImageView.image = UIImage.init(contentsOfFile: path)?.stretch()
-        }
+
+        self.backgroundColor = UIColor.init(red: 245.0 / 255.0, green: 245.0 / 255.0, blue: 245.0 / 255.0, alpha: 1.0)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -104,14 +114,6 @@ open class MessageTextCell: UITableViewCell {
     
     open override func layoutSubviews() {
         super.layoutSubviews()
-        
-        if let attributes = self.layoutAttributes {
-            self.bubbleImageView.frame = attributes.messageContainerFrame
-            self.messageLabel.frame = CGRect.init(x: attributes.messageLabelInsets.left, y: attributes.messageLabelInsets.top, width: attributes.messageContainerFrame.width - attributes.messageLabelInsets.left - attributes.messageLabelInsets.right, height: attributes.messageContainerFrame.height - attributes.messageLabelInsets.top - attributes.messageLabelInsets.bottom)
-            self.avatarImageView.frame = attributes.avatarFrame
-            self.avatarImageView.layer.cornerRadius = attributes.avatarFrame.width / 2
-
-        }
     }
 }
 

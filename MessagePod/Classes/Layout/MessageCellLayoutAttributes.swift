@@ -19,11 +19,11 @@ final class MessageCellLayoutAttributes {
     
     // Cell
     var itemHeight: CGFloat = 0
-    var cellFrame: CGRect = .zero
+    var itemWidth: CGFloat = UIScreen.main.bounds.width
 
     
     // avatar
-    var avatarPosition = CGPoint.zero
+    var avatarPosition: AvatarPosition = AvatarPosition.init(side: .cellLeading, margin: UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0))
     var avatarSize: CGSize = CGSize.init(width: 30, height: 30)
     
     // message label
@@ -40,8 +40,14 @@ final class MessageCellLayoutAttributes {
     lazy var avatarFrame: CGRect = {
         
         guard avatarSize != .zero else { return .zero }
-        var origin = avatarPosition
         
+        var origin: CGPoint
+        switch avatarPosition.side {
+        case .cellLeading:
+            origin = CGPoint.init(x: avatarPosition.margin.left, y: avatarPosition.margin.top)
+        case .cellTrailing:
+            origin = CGPoint.init(x: itemWidth - avatarPosition.margin.right - avatarSize.width, y: avatarPosition.margin.top)
+        }
         return CGRect(origin: origin, size: avatarSize)
     }()
     
@@ -51,14 +57,27 @@ final class MessageCellLayoutAttributes {
         guard messageContainerSize != .zero else { return .zero }
         
         var origin: CGPoint = .zero
-        origin.y = 10// topLabelSize.height + messageContainerPadding.top + topLabelVerticalPadding
         
-        origin.x = avatarSize.width + messageContainerPadding.left
+        switch avatarPosition.side {
+        case .cellLeading:
+            origin = CGPoint.init(x: avatarPosition.margin.left + avatarSize.width + messageContainerPadding.left, y: messageContainerPadding.top)
+        case .cellTrailing:
+            origin = CGPoint.init(x: avatarFrame.origin.x - messageContainerPadding.right - messageContainerSize.width, y: messageContainerPadding.top)
+        }
         
         return CGRect(origin: origin, size: messageContainerSize)
-        
     }()
     
+    
+    // avatar
+    var avatarHorizontalInset: CGFloat {
+        switch avatarPosition.side {
+        case .cellLeading:
+            return avatarPosition.margin.left
+        case .cellTrailing:
+            return avatarPosition.margin.right
+        }
+    }
     
     // label
     var messageLabelVerticalInsets: CGFloat {

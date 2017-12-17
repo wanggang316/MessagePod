@@ -14,6 +14,8 @@ class ConversationViewController: MessageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.messagesTableView.backgroundColor = UIColor.init(red: 245.0 / 255.0, green: 245.0 / 255.0, blue: 245.0 / 255.0, alpha: 1.0)
+        
         self.messages = MessageData.messages
     }
 
@@ -22,3 +24,10 @@ class ConversationViewController: MessageViewController {
     }
 
 }
+
+//extension ConversationViewController {
+//    func bubbleImage(for message: Message, in messageTableView: MessageTableView) -> UIImage? {
+//        return UIImage()
+//    }
+//}
+

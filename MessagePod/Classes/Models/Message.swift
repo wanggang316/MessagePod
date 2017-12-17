@@ -19,3 +19,9 @@ public struct Message {
     }
     
 }
+
+extension Message: Equatable {
+    static public func == (left: Message, right: Message) -> Bool {
+        return left.text.hashValue == right.text.hashValue
+    }
+}

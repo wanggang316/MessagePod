@@ -7,7 +7,7 @@
 
 import UIKit
 
-open class MessageCellLayout: NSObject {
+open class MessageCellLayout {
 
     open weak var messageTableView: MessageTableView?
     
@@ -82,6 +82,7 @@ open class MessageCellLayout: NSObject {
 //        
 //        // Cell Height
         attributes.itemHeight = cellHeight(for: attributes)
+        attributes.itemWidth = cellWidth(for: attributes)
         
         return attributes
     }
@@ -111,7 +112,7 @@ private extension MessageCellLayout {
 
 // MARK: - avatar
 extension MessageCellLayout {
-    func avatarPosition(for attributes: MessageCellLayoutAttributes) -> CGPoint {
+    func avatarPosition(for attributes: MessageCellLayoutAttributes) -> AvatarPosition {
         let position = messageDelegate.avatarPosition(for: attributes.message, at: attributes.indexPath, in: messageTableView!)
         return position
     }
@@ -152,7 +153,7 @@ extension MessageCellLayout {
     }
     
     func messageContainerMaxWidth(for attributes: MessageCellLayoutAttributes) -> CGFloat {
-        return itemWidth - attributes.avatarSize.width - attributes.messageHorizontalPadding - attributes.messageLabelHorizontalInsets
+        return itemWidth - attributes.avatarSize.width - attributes.avatarHorizontalInset - attributes.messageHorizontalPadding - attributes.messageLabelHorizontalInsets
     }
 }
 
@@ -169,4 +170,8 @@ private extension MessageCellLayout {
         return cellHeight
     }
     
+    private func cellWidth(for attributes: MessageCellLayoutAttributes) -> CGFloat {
+        return messageDelegate.messageCellWidth(at: attributes.indexPath, in: messageTableView!)
+    }
+
 }
