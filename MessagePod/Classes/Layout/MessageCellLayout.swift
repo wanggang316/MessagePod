@@ -31,7 +31,7 @@ open class MessageCellLayout {
     
     fileprivate var itemWidth: CGFloat {
         guard let messageTableView = messageTableView else { return 0 }
-        return messageTableView.frame.width - messageTableView.contentInset.left - messageTableView.contentInset.right
+        return UIScreen.main.bounds.width - messageTableView.contentInset.left - messageTableView.contentInset.right
     }
     
     func messageCellLayoutAttributes(for indexPath: IndexPath) -> MessageCellLayoutAttributes {
