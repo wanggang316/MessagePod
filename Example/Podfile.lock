@@ -1,9 +1,11 @@
 PODS:
   - MessagePod (0.0.1):
     - TTTAttributedLabel (~> 2.0)
+    - YYText
   - Nimble (7.0.3)
   - Quick (1.2.0)
   - TTTAttributedLabel (2.0.0)
+  - YYText (1.0.7)
 
 DEPENDENCIES:
   - MessagePod (from `../MessagePod.podspec`)
@@ -15,10 +17,11 @@ EXTERNAL SOURCES:
     :path: ../MessagePod.podspec
 
 SPEC CHECKSUMS:
-  MessagePod: b321d9fda045576c596b12f8b2cfd612d4b13cc3
+  MessagePod: 41d39a193df89f8a4da65fc6dd801132819d81f6
   Nimble: 7f5a9c447a33002645a071bddafbfb24ea70e0ac
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
+  YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
 PODFILE CHECKSUM: 0630e5edd204086261b4fa3f02e643a700d2ee42
 

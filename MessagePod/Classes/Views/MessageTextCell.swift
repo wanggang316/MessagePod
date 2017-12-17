@@ -6,7 +6,8 @@
 //
 
 import UIKit
-import TTTAttributedLabel
+//import TTTAttributedLabel
+import YYText
 
 open class MessageTextCell: UITableViewCell {
 
@@ -39,23 +40,39 @@ open class MessageTextCell: UITableViewCell {
         return imageView
     }()
     
-    open lazy var messageLabel: TTTAttributedLabel = {
-        let label = TTTAttributedLabel.init(frame: CGRect.zero)
-        label.delegate = self
+//    open lazy var messageLabel: TTTAttributedLabel = {
+//        let label = TTTAttributedLabel.init(frame: CGRect.zero)
+//        label.delegate = self
+//        label.numberOfLines = 0
+//        label.font = UIFont.systemFont(ofSize: 14)
+//        label.textColor = .black
+//
+//        label.linkAttributes = [NSAttributedStringKey.foregroundColor: UIColor.red]
+//        label.activeLinkAttributes = [NSAttributedStringKey.foregroundColor: UIColor.green]
+//        label.inactiveLinkAttributes = [NSAttributedStringKey.foregroundColor: UIColor.orange]
+//
+//        label.enabledTextCheckingTypes = NSTextCheckingAllTypes
+//        label.isUserInteractionEnabled = true
+//        label.extendsLinkTouchArea = false
+//        return label
+//    }()
+    open lazy var messageLabel: YYLabel = {
+        let label = YYLabel.init(frame: CGRect.zero)
+//        label.delegate = self
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .black
         
-        label.linkAttributes = [NSAttributedStringKey.foregroundColor: UIColor.red]
-        label.activeLinkAttributes = [NSAttributedStringKey.foregroundColor: UIColor.green]
-        label.inactiveLinkAttributes = [NSAttributedStringKey.foregroundColor: UIColor.orange]
-
-        label.enabledTextCheckingTypes = NSTextCheckingAllTypes
+//        label.linkAttributes = [NSAttributedStringKey.foregroundColor: UIColor.red]
+//        label.activeLinkAttributes = [NSAttributedStringKey.foregroundColor: UIColor.green]
+//        label.inactiveLinkAttributes = [NSAttributedStringKey.foregroundColor: UIColor.orange]
+//
+//        label.enabledTextCheckingTypes = NSTextCheckingAllTypes
         label.isUserInteractionEnabled = true
-        label.extendsLinkTouchArea = false
+//        label.extendsLinkTouchArea = false
+        label.displaysAsynchronously = true
         return label
     }()
-    
     
     let attr = [
         NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14),
@@ -68,21 +85,54 @@ open class MessageTextCell: UITableViewCell {
 
                 self.avatarImageView.image = message.sender.image
 
+//                if let actions = message.actions {
+//                    messageLabel.attributedText = nil
+//                    let contentAttributedString = NSAttributedString.init(string: message.text, attributes: attr)
+//                    self.messageLabel.attributedText = contentAttributedString
+//
+//                    for (key, value) in actions {
+//                        if let range = message.text.range(of: key) {
+//                            let nsrange = NSRange.init(range, in: message.text)
+//                            messageLabel.addLink(to: URL.init(string: value)!, with: nsrange)
+//                        }
+//                    }
+//                } else {
+//                    messageLabel.attributedText = nil
+//                    self.messageLabel.text = message.text
+//                }
+                
                 if let actions = message.actions {
-                    messageLabel.attributedText = nil
-                    let contentAttributedString = NSAttributedString.init(string: message.text, attributes: attr)
-                    self.messageLabel.attributedText = contentAttributedString
+                
+                    let attributedString = NSMutableAttributedString.init(string: message.text)
+                    
+                    attributedString.yy_font = UIFont.systemFont(ofSize: 14)
+                    let hightLight = YYTextHighlight()
+                    hightLight.setColor(UIColor.red)
+                    hightLight.tapAction = { (view, attributeString, range, rect) in
+                        guard let r = Range(range, in: attributedString.string) else { return }
+                        let key = attributedString.string[r]
+                        let keyString = String(key)
+                        print("-----> \(String(describing: actions[keyString]))")
+                    }
+                    
 
-                    for (key, value) in actions {
+                    for (key, _) in actions {
                         if let range = message.text.range(of: key) {
                             let nsrange = NSRange.init(range, in: message.text)
-                            messageLabel.addLink(to: URL.init(string: value)!, with: nsrange)
+                            attributedString.yy_setTextHighlight(hightLight, range: nsrange)
+                            attributedString.yy_setColor(UIColor.red, range: nsrange)
+                            attributedString.yy_setTextUnderline(YYTextDecoration.init(style: YYTextLineStyle.single), range: nsrange)
                         }
                     }
+                    
+                    self.messageLabel.attributedText = attributedString
+
+                    
+
                 } else {
-                    messageLabel.attributedText = nil
                     self.messageLabel.text = message.text
                 }
+                
             }
         }
     }
@@ -127,10 +177,10 @@ open class MessageTextCell: UITableViewCell {
     }
 }
 
-extension MessageTextCell: TTTAttributedLabelDelegate {
-    public func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
-        print("tap url: \(url)")
-    }
-}
+//extension MessageTextCell: TTTAttributedLabelDelegate {
+//    public func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
+//        print("tap url: \(url)")
+//    }
+//}
 
 

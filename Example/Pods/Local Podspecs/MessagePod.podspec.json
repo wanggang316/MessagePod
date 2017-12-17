@@ -24,6 +24,9 @@
   "dependencies": {
     "TTTAttributedLabel": [
       "~> 2.0"
+    ],
+    "YYText": [
+
     ]
   },
   "pod_target_xcconfig": {
