@@ -34,6 +34,7 @@ open class MessageTextCell: UITableViewCell {
     open lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = UIViewContentMode.scaleAspectFill
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -108,6 +109,8 @@ open class MessageTextCell: UITableViewCell {
             self.bubbleImageView.frame = attributes.messageContainerFrame
             self.messageLabel.frame = CGRect.init(x: attributes.messageLabelInsets.left, y: attributes.messageLabelInsets.top, width: attributes.messageContainerFrame.width - attributes.messageLabelInsets.left - attributes.messageLabelInsets.right, height: attributes.messageContainerFrame.height - attributes.messageLabelInsets.top - attributes.messageLabelInsets.bottom)
             self.avatarImageView.frame = attributes.avatarFrame
+            self.avatarImageView.layer.cornerRadius = attributes.avatarFrame.width / 2
+
         }
     }
 }

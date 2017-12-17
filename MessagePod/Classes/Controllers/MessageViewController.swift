@@ -14,6 +14,8 @@ open class MessageViewController: UIViewController {
     open var messagesTableView = MessageTableView()
     open var messageCellLayout: MessageCellLayout = MessageCellLayout()
     
+    open var currentSender: Sender = Sender.init(id: "2", name: "", image: UIImage.init(named: ""))
+    
     // MARK: - Properties
     open var messages: [Message]?
     
@@ -114,6 +116,11 @@ extension MessageViewController: UITableViewDelegate {
 
 
 extension MessageViewController: MessageViewDataSource {
+    
+    public func currentSender() -> Sender {
+        return self.currentSender
+    }
+    
     public func numberofRows(in messageTableView: MessageTableView) -> Int {
         return self.messages?.count ?? 0
     }
