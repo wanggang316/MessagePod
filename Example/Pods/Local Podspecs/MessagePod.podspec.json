@@ -21,6 +21,11 @@
       "MessagePodAssets": "Assets/MessagePodAssets.bundle/images"
     }
   },
+  "dependencies": {
+    "TTTAttributedLabel": [
+      "~> 2.0"
+    ]
+  },
   "pod_target_xcconfig": {
     "SWIFT_VERSION": "4.0"
   },

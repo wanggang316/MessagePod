@@ -10,7 +10,8 @@
 #endif
 #endif
 
+#import "TTTAttributedLabel.h"
 
-FOUNDATION_EXPORT double MessagePodVersionNumber;
-FOUNDATION_EXPORT const unsigned char MessagePodVersionString[];
+FOUNDATION_EXPORT double TTTAttributedLabelVersionNumber;
+FOUNDATION_EXPORT const unsigned char TTTAttributedLabelVersionString[];
 

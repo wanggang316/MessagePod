@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import TTTAttributedLabel
 
 open class MessageTextCell: UITableViewCell {
 
@@ -38,39 +39,50 @@ open class MessageTextCell: UITableViewCell {
         return imageView
     }()
     
-    open lazy var messageLabel: UILabel = {
-        let label = UILabel()
-        
+    open lazy var messageLabel: TTTAttributedLabel = {
+        let label = TTTAttributedLabel.init(frame: CGRect.zero)
+        label.delegate = self
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .black
+        
+        label.linkAttributes = [NSAttributedStringKey.foregroundColor: UIColor.red]
+        label.activeLinkAttributes = [NSAttributedStringKey.foregroundColor: UIColor.green]
+        label.inactiveLinkAttributes = [NSAttributedStringKey.foregroundColor: UIColor.orange]
+
+        label.enabledTextCheckingTypes = NSTextCheckingAllTypes
+        label.isUserInteractionEnabled = true
+        label.extendsLinkTouchArea = false
         return label
     }()
     
+    
+    let attr = [
+        NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14),
+        NSAttributedStringKey.foregroundColor: UIColor.black
+    ]
     // MARK: - Properties
     open var message: Message? {
         didSet {
             if let message = self.message {
 
                 self.avatarImageView.image = message.sender.image
-                
-//                if let actions = message.actions {
-//                    var types = self.messageLabel.enabledTypes
-//                    for (key, value) in actions {
-//                        let customType = ActiveType.custom(pattern: key)
-//
-//                        self.messageLabel.customColor[customType] = UIColor.purple
-//                        self.messageLabel.customSelectedColor[customType] = UIColor.green
-//                        
-//                        self.messageLabel.handleCustomTap(for: customType) { element in
-//                            print("\(element): \(value) tapped")
-//                        }
-//                        types.append(customType)
-//                    }
-//                    self.messageLabel.enabledTypes = types
-//                }
-                
-               self.messageLabel.text = message.text
+
+                if let actions = message.actions {
+                    messageLabel.attributedText = nil
+                    let contentAttributedString = NSAttributedString.init(string: message.text, attributes: attr)
+                    self.messageLabel.attributedText = contentAttributedString
+
+                    for (key, value) in actions {
+                        if let range = message.text.range(of: key) {
+                            let nsrange = NSRange.init(range, in: message.text)
+                            messageLabel.addLink(to: URL.init(string: value)!, with: nsrange)
+                        }
+                    }
+                } else {
+                    messageLabel.attributedText = nil
+                    self.messageLabel.text = message.text
+                }
             }
         }
     }
@@ -83,14 +95,12 @@ open class MessageTextCell: UITableViewCell {
             self.layoutAttributes = attributes
             self.bubbleImageView.image = bubbleImage
             
-//            if let attributes = self.layoutAttributes {
-                self.bubbleImageView.frame = attributes.messageContainerFrame
-                self.messageLabel.frame = CGRect.init(x: attributes.messageLabelInsets.left, y: attributes.messageLabelInsets.top, width: attributes.messageContainerFrame.width - attributes.messageLabelInsets.left - attributes.messageLabelInsets.right, height: attributes.messageContainerFrame.height - attributes.messageLabelInsets.top - attributes.messageLabelInsets.bottom)
-                self.avatarImageView.frame = attributes.avatarFrame
-                //                    self.avatarImageView.layer.cornerRadius = attributes.avatarFrame.width / 2
-//            }
+            self.bubbleImageView.frame = attributes.messageContainerFrame
+            self.messageLabel.frame = CGRect.init(x: attributes.messageLabelInsets.left, y: attributes.messageLabelInsets.top, width: attributes.messageContainerFrame.width - attributes.messageLabelInsets.left - attributes.messageLabelInsets.right, height: attributes.messageContainerFrame.height - attributes.messageLabelInsets.top - attributes.messageLabelInsets.bottom)
+            self.avatarImageView.frame = attributes.avatarFrame
+            self.avatarImageView.layer.cornerRadius = attributes.avatarFrame.width / 2
         }
-//        self.layoutSubviews()
+
     }
     
     var bubbleImage: UIImage?
@@ -114,6 +124,12 @@ open class MessageTextCell: UITableViewCell {
     
     open override func layoutSubviews() {
         super.layoutSubviews()
+    }
+}
+
+extension MessageTextCell: TTTAttributedLabelDelegate {
+    public func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
+        print("tap url: \(url)")
     }
 }
 
