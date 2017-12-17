@@ -36,29 +36,17 @@ open class MessageTextCell: UITableViewCell {
         
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 14)
-        label.enabledTypes = [.mention, .hashtag, .url]
         label.textColor = .black
-        label.handleHashtagTap { hashtag in
-            print("Success. You just tapped the \(hashtag) hashtag")
-        }
-        label.handleURLTap({ url in
-            UIApplication.shared.openURL(url)
-        })
-        label.handleMentionTap { userHandle in
-            print("\(userHandle) tapped")
-        }
-
-        let customType = ActiveType.custom(pattern: "关注")
-        label.enabledTypes = [.mention, .hashtag, .url, customType]
-        
-        label.customColor[customType] = UIColor.purple
-        label.customSelectedColor[customType] = UIColor.green
-        
-        label.handleCustomTap(for: customType) { element in
-            print("\(element) tapped")
-        }
-
-
+//        label.enabledTypes = [.mention, .hashtag, .url]
+//        label.handleHashtagTap { hashtag in
+//            print("Success. You just tapped the \(hashtag) hashtag")
+//        }
+//        label.handleURLTap({ url in
+//            UIApplication.shared.openURL(url)
+//        })
+//        label.handleMentionTap { userHandle in
+//            print("\(userHandle) tapped")
+//        }
         return label
     }()
     
@@ -67,7 +55,27 @@ open class MessageTextCell: UITableViewCell {
         didSet {
             if let message = self.message {
 //                self.messageTextView.attributedText = message.attributeText
-                self.messageLabel.text = message.attributeText.string
+               
+                
+                if let actions = message.actions {
+                    
+                    var types = self.messageLabel.enabledTypes
+
+                    for (key, value) in actions {
+                        let customType = ActiveType.custom(pattern: key)
+
+                        self.messageLabel.customColor[customType] = UIColor.purple
+                        self.messageLabel.customSelectedColor[customType] = UIColor.green
+                        
+                        self.messageLabel.handleCustomTap(for: customType) { element in
+                            print("\(element): \(value) tapped")
+                        }
+                        types.append(customType)
+                    }
+                    self.messageLabel.enabledTypes = types
+                }
+                
+               self.messageLabel.text = message.text
             }
         }
     }

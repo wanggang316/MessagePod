@@ -10,6 +10,7 @@
 #endif
 #endif
 
+#import "ActiveLabel.h"
 
 FOUNDATION_EXPORT double MessagePodVersionNumber;
 FOUNDATION_EXPORT const unsigned char MessagePodVersionString[];

@@ -10,4 +10,7 @@ import Foundation
 public protocol MessageViewDataSource: AnyObject {
     
     func number(of row: Int) -> Int
+    
+    func messageForItem(at indexPath: IndexPath, in messageTableView: MessageTableView) -> Message
+
 }

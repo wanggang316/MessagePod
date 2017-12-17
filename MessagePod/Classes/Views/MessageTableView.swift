@@ -9,6 +9,7 @@ import UIKit
 
 open class MessageTableView: UITableView {
 
-
+    open weak var messageDataSource: MessageViewDataSource?
+    open weak var messageDelegate: MessageViewDelegate?
 
 }

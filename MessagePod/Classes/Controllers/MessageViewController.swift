@@ -89,7 +89,15 @@ extension MessageViewController: UITableViewDelegate {
         
         if let messages = self.messages {
             let message = messages[indexPath.row]
-            let height = message.attributeText.height(considering: 240 - 10)
+            
+            let maxWidth: CGFloat = 240
+            let estimatedHeight = message.text.height(considering: maxWidth, and: UIFont.systemFont(ofSize: 14))
+            let estimatedWidth = message.text.width(considering: estimatedHeight, and: UIFont.systemFont(ofSize: 14))
+            
+            let finalHeight = estimatedHeight.rounded(.up)
+            let finalWidth = estimatedWidth > maxWidth ? maxWidth : estimatedWidth.rounded(.up)
+            
+            let height = message.text.height(considering: 240 - 10, and: UIFont.systemFont(ofSize: 14))
             return height + 30
         }
         return 0

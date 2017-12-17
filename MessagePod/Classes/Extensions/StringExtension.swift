@@ -16,4 +16,12 @@ extension String {
         return rect.height
         
     }
+    
+    func width(considering height: CGFloat, and font: UIFont) -> CGFloat {
+        
+        let constraintBox = CGSize(width: .greatestFiniteMagnitude, height: height)
+        let rect = self.boundingRect(with: constraintBox, options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: font], context: nil)
+        return rect.width
+        
+    }
 }
