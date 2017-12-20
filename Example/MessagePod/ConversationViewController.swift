@@ -16,7 +16,13 @@ class ConversationViewController: MessageViewController {
         
         self.messagesTableView.backgroundColor = UIColor.init(red: 245.0 / 255.0, green: 245.0 / 255.0, blue: 245.0 / 255.0, alpha: 1.0)
         
-        self.messages = MessageData.messages
+//        DispatchQueue.global(qos: .userInitiated).async {
+//            SampleData.shared.getMessages(count: 30) { messages in
+//                DispatchQueue.main.async {
+                    self.messages = MessageData.messages
+//                }
+//            }
+//        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -25,9 +31,19 @@ class ConversationViewController: MessageViewController {
 
 }
 
-//extension ConversationViewController {
-//    func bubbleImage(for message: Message, in messageTableView: MessageTableView) -> UIImage? {
-//        return UIImage()
+//extension ConversationViewController: MessageInputViewDelegate {
+//
+//    func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
+//        //        messageList.append(MockMessage(text: text, sender: currentSender(), messageId: UUID().uuidString, date: Date()))
+//        //        inputBar.inputTextView.text = String()
+//        //        messagesCollectionView.insertSections([messageList.count - 1])
+//        //        messagesCollectionView.scrollToBottom()
+//
+//    }
+//
+//
+//    func messageInputView(_ inputView: MessageInputView, textViewTextDidChangeTo text: String) {
+//        print(text)
 //    }
 //}
 

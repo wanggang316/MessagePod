@@ -38,6 +38,23 @@ open class MessageViewController: UIViewController {
         return messageInputView
     }
     
+    // MARK: - Constraint
+    lazy var inputBottom: NSLayoutConstraint = {
+        if #available(iOS 11.0, *) {
+            return messageInputView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        } else {
+            return messageInputView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        }
+    }()
+    
+    lazy var tableViewTop: NSLayoutConstraint = {
+        if #available(iOS 11.0, *) {
+            return messagesTableView.topAnchor.constraint(equalTo: view.topAnchor, constant: topLayoutGuide.length)
+        } else {
+            return messagesTableView.topAnchor.constraint(equalTo: view.topAnchor)
+        }
+    }()
+    
     open override var canBecomeFirstResponder: Bool {
         return true
     }
@@ -46,11 +63,10 @@ open class MessageViewController: UIViewController {
         return false
     }
     
-    open var scrollsToBottomOnKeybordBeginsEditing: Bool = false
+    open var scrollsToBottomOnKeybordBeginsEditing: Bool = true
 
-    open var scrollsToBottomOnFirstLayout: Bool = false
+    open var scrollsToBottomOnFirstLayout: Bool = true
 
-    
     private var isFirstLayout: Bool = true
 
     
@@ -60,16 +76,17 @@ open class MessageViewController: UIViewController {
     override open func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = UIColor.white
         extendedLayoutIncludesOpaqueBars = true
         automaticallyAdjustsScrollViewInsets = false
         messagesTableView.keyboardDismissMode = .interactive
         messagesTableView.alwaysBounceVertical = true
 
+        self.messagesTableView.keyboardDismissMode = .onDrag
         
         self.messagesTableView.messageDataSource = self
         self.messagesTableView.messageDelegate = self
-        self.messagesTableView.dataSource = self
-        self.messagesTableView.delegate = self
+
         self.messagesTableView.tableFooterView = UIView()
         self.messagesTableView.separatorStyle = .none
         
@@ -77,17 +94,24 @@ open class MessageViewController: UIViewController {
 
         self.view.addSubview(self.messagesTableView)
         
+        self.messagesTableView.register(MessageTextCell.self, forCellReuseIdentifier: "cell")
+        
 //        scrollsToBottomOnFirstLayout = true //default false
 //        scrollsToBottomOnKeybordBeginsEditing = true // default false
         
-        let newMessageInputView = MessageInputView()
-//        newMessageInputView.sendButton.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
-        newMessageInputView.delegate = self
-        messageInputView = newMessageInputView
+//        let newMessageInputView = MessageInputView()
+//        newMessageInputView.delegate = self
+//        newMessageInputView.layoutSubviews()
+//        messageInputView = newMessageInputView
+//        self.view.addSubview(messageInputView)
+        
+        self.setupConstraints()
         reloadInputViews()
         
-        self.messagesTableView.register(MessageTextCell.self, forCellReuseIdentifier: "cell")
-        self.setupConstraints()
+        self.messagesTableView.dataSource = self
+        self.messagesTableView.delegate = self
+        
+        self.messagesTableView.reloadData()
     }
 
     override open func didReceiveMemoryWarning() {
@@ -95,11 +119,51 @@ open class MessageViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
+
+ 
+
+    
+//    private func setupConstraints() {
+//
+//        messagesTableView.translatesAutoresizingMaskIntoConstraints = false
+//
+//        let bottom = messagesTableView.bottomAnchor.constraint(equalTo: messageInputView.topAnchor)
+//
+//        if #available(iOS 11.0, *) {
+//
+//            let inputLeading = messageInputView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor)
+//            let inputTrailing = messageInputView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+//            let inputHeight = messageInputView.heightAnchor.constraint(equalToConstant: 49)
+//            NSLayoutConstraint.activate([inputLeading, inputTrailing, inputBottom, inputHeight])
+//
+//            let leading = messagesTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor)
+//            let trailing = messagesTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+//            NSLayoutConstraint.activate([tableViewTop, bottom, trailing, leading])
+//        } else {
+//
+//            let inputLeading = messageInputView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
+//            let inputTrailing = messageInputView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+//            let inputHeight = messageInputView.heightAnchor.constraint(equalToConstant: 49)
+//            NSLayoutConstraint.activate([inputLeading, inputTrailing, inputBottom, inputHeight])
+//
+//            let leading = messagesTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
+//            let trailing = messagesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+//            NSLayoutConstraint.activate([tableViewTop, bottom, trailing, leading])
+//        }
+//        adjustScrollViewInset()
+//    }
+    
+    
+    lazy var top = messagesTableView.topAnchor.constraint(equalTo: view.topAnchor, constant: topLayoutGuide.length)
+    lazy var bottom = messagesTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+    
     private func setupConstraints() {
         messagesTableView.translatesAutoresizingMaskIntoConstraints = false
         
-        let top = messagesTableView.topAnchor.constraint(equalTo: view.topAnchor, constant: topLayoutGuide.length)
-        let bottom = messagesTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+//        let top = messagesTableView.topAnchor.constraint(equalTo: view.topAnchor, constant: topLayoutGuide.length)
+//        let bottom = messagesTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+
         if #available(iOS 11.0, *) {
             let leading = messagesTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor)
             let trailing = messagesTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
@@ -125,8 +189,6 @@ open class MessageViewController: UIViewController {
         }
     }
     
-    
-    
     open override func viewDidLayoutSubviews() {
         // Hack to prevent animation of the contentInset after viewDidAppear
         if isFirstLayout {
@@ -138,7 +200,8 @@ open class MessageViewController: UIViewController {
             
             //Scroll to bottom at first load
             if scrollsToBottomOnFirstLayout {
-                messagesTableView.setContentOffset(CGPoint.init(x: 0, y: CGFloat.greatestFiniteMagnitude), animated: true)
+                messagesTableView.scrollToBottom(animated: false)
+//                messagesTableView.setContentOffset(CGPoint.init(x: 0, y: CGFloat.greatestFiniteMagnitude), animated: true)
             }
         }
     }
@@ -174,6 +237,13 @@ extension MessageViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let attributes = self.messageCellLayout.messageCellLayoutAttributes(for: indexPath)
         return attributes.itemHeight
+    }
+    
+    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    
+//        if self.inputAccessoryView?.isHidden == false {
+//            UIApplication.shared.keyWindow?.endEditing(true)
+//        }
     }
 
 }
@@ -246,6 +316,80 @@ extension MessageViewController: MessageViewDelegate {
 
 fileprivate extension MessageViewController {
     
+//    func addKeyboardObservers() {
+////        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidChangeState), name: .UIKeyboardWillChangeFrame, object: nil)
+//
+////        NotificationCenter.default.addObserver(self, selector: #selector(handleTextViewDidBeginEditing), name: .UITextViewTextDidBeginEditing, object: messageInputView.inputTextView)
+////        NotificationCenter.default.addObserver(self, selector: #selector(adjustScrollViewInset), name: .UIDeviceOrientationDidChange, object: nil)
+//
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShown), name: .UIKeyboardWillChangeFrame, object: nil)
+//
+////        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShown), name: Notification.Name.UIKeyboardWillShow, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden), name: Notification.Name.UIKeyboardWillHide, object: nil)
+//
+//    }
+//
+//    func removeKeyboardObservers() {
+//        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillChangeFrame, object: nil)
+//        NotificationCenter.default.removeObserver(self, name: .UITextViewTextDidBeginEditing, object: messageInputView.inputTextView)
+//        NotificationCenter.default.removeObserver(self, name: .UIDeviceOrientationDidChange, object: nil)
+//    }
+//
+//    @objc
+//    func handleTextViewDidBeginEditing(_ notification: Notification) {
+//        if scrollsToBottomOnKeybordBeginsEditing {
+//            messagesTableView.scrollToBottom()
+//        }
+//    }
+//
+//    @objc
+//    func keyboardWillShown(_ notification: Notification) {
+//
+//        guard let keyboardEndFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
+//
+//        messagesTableView.scrollToBottom()
+//
+//        var frame = self.messageInputView.frame
+//        let constant = -keyboardEndFrame.size.height + iPhoneXBottomInset
+//        self.inputBottom.constant = constant
+//        self.tableViewTop.constant = constant
+//
+//        if frame.origin.y > UIScreen.main.bounds.height - keyboardEndFrame.size.height - 49 - iPhoneXBottomInset {
+//            frame.origin.y = UIScreen.main.bounds.height - keyboardEndFrame.size.height - 49
+//            frame.size.height = 49
+//            UIView.animate(withDuration: 0.25, animations: {
+//                self.messageInputView.frame = frame
+//               self.view.layoutIfNeeded()
+//            })
+//        }
+//    }
+//
+//    @objc func keyboardWillBeHidden(notification: Notification) {
+//
+//        var frame = self.messageInputView.frame
+//        self.inputBottom.constant = 0
+//        self.tableViewTop.constant = 0
+//
+//        if frame.origin.y != UIScreen.main.bounds.height - 49 {
+//            frame.origin.y = UIScreen.main.bounds.height - 49 - iPhoneXBottomInset
+//            frame.size.height = 49 + iPhoneXBottomInset
+//            UIView.animate(withDuration: 0.25, animations: {
+//                self.messageInputView.frame = frame
+//
+//                self.view.layoutIfNeeded()
+//            })
+//
+//        }
+//    }
+//
+//
+//    fileprivate var keyboardOffsetFrame: CGRect {
+//        guard let inputFrame = inputAccessoryView?.frame else { return .zero }
+//        return CGRect(origin: inputFrame.origin, size: CGSize(width: inputFrame.width, height: inputFrame.height - iPhoneXBottomInset))
+//    }
+    
+    
+    
     func addKeyboardObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidChangeState), name: .UIKeyboardWillChangeFrame, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleTextViewDidBeginEditing), name: .UITextViewTextDidBeginEditing, object: messageInputView.inputTextView)
@@ -261,7 +405,7 @@ fileprivate extension MessageViewController {
     @objc
     func handleTextViewDidBeginEditing(_ notification: Notification) {
         if scrollsToBottomOnKeybordBeginsEditing {
-            messagesTableView.setContentOffset(CGPoint.init(x: 0, y: CGFloat.greatestFiniteMagnitude), animated: true)
+            messagesTableView.scrollToBottom(animated: true)
         }
     }
     
@@ -273,14 +417,27 @@ fileprivate extension MessageViewController {
         if (keyboardEndFrame.origin.y + keyboardEndFrame.size.height) > UIScreen.main.bounds.height {
             // Hardware keyboard is found
             let bottomInset = view.frame.size.height - keyboardEndFrame.origin.y - iPhoneXBottomInset
-            messagesTableView.contentInset.bottom = bottomInset
-            messagesTableView.scrollIndicatorInsets.bottom = bottomInset
+//            messagesTableView.contentInset.bottom = bottomInset
+//            messagesTableView.scrollIndicatorInsets.bottom = bottomInset
+            guard bottomInset >= keyboardOffsetFrame.height else { return }
+            top.constant = -bottomInset
+            bottom.constant = -bottomInset
+            UIView.animate(withDuration: 0.25, animations: {
+                self.view.layoutIfNeeded()
+            })
             
         } else {
             //Software keyboard is found
             let bottomInset = keyboardEndFrame.height > keyboardOffsetFrame.height ? (keyboardEndFrame.height - iPhoneXBottomInset) : keyboardOffsetFrame.height
-            messagesTableView.contentInset.bottom = bottomInset
-            messagesTableView.scrollIndicatorInsets.bottom = bottomInset
+//            messagesTableView.contentInset.bottom = bottomInset
+//            messagesTableView.scrollIndicatorInsets.bottom = bottomInset
+            guard bottomInset >= keyboardOffsetFrame.height else { return }
+
+            top.constant = -bottomInset
+            bottom.constant = -bottomInset
+            UIView.animate(withDuration: 0.25, animations: {
+                self.view.layoutIfNeeded()
+            })
         }
         
     }
@@ -297,7 +454,7 @@ fileprivate extension MessageViewController {
     fileprivate var iPhoneXBottomInset: CGFloat {
         if #available(iOS 11.0, *) {
             guard UIScreen.main.nativeBounds.height == 2436 else { return 0 }
-            return view.safeAreaInsets.bottom
+            return 34// view.safeAreaInsets.bottom
         }
         return 0
     }

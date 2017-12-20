@@ -84,6 +84,7 @@ open class MessageInputView: UIView {
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
+        self.backgroundColor = UIColor.yellow
         setup()
     }
     
@@ -116,6 +117,7 @@ open class MessageInputView: UIView {
     /// Sets up the initial constraints of each subview
     private func setupConstraints() {
         
+        self.translatesAutoresizingMaskIntoConstraints = false
         backgroundView.addConstraints(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
         
         textViewLayoutSet = NSLayoutConstraintSet(
@@ -132,10 +134,11 @@ open class MessageInputView: UIView {
         super.didMoveToWindow()
         if #available(iOS 11.0, *) {
             guard let window = window else { return }
-            
+
             textViewLayoutSet?.bottom?.isActive = false
             textViewLayoutSet?.bottom = inputTextView.bottomAnchor.constraintLessThanOrEqualToSystemSpacingBelow(window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
             textViewLayoutSet?.bottom?.isActive = true
+
 //            textViewLayoutSet?.bottom?.isActive = true
 //            textViewLayoutSet?.bottom?.isActive = true
 //            textViewLayoutSet?.activate()
@@ -144,6 +147,27 @@ open class MessageInputView: UIView {
 //            bottomStackViewLayoutSet?.bottom = bottomStackView.bottomAnchor.constraintLessThanOrEqualToSystemSpacingBelow(window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
 //            bottomStackViewLayoutSet?.bottom?.isActive = true
         }
+    }
+    
+    internal func performLayout(_ animated: Bool, _ animations: @escaping () -> Void) {
+        
+        textViewLayoutSet?.deactivate()
+//        leftStackViewLayoutSet?.deactivate()
+//        rightStackViewLayoutSet?.deactivate()
+//        bottomStackViewLayoutSet?.deactivate()
+//        topStackViewLayoutSet?.deactivate()
+        if animated {
+            DispatchQueue.main.async {
+                UIView.animate(withDuration: 0.3, animations: animations)
+            }
+        } else {
+            UIView.performWithoutAnimation { animations() }
+        }
+        textViewLayoutSet?.activate()
+//        leftStackViewLayoutSet?.activate()
+//        rightStackViewLayoutSet?.activate()
+//        bottomStackViewLayoutSet?.activate()
+//        topStackViewLayoutSet?.activate()
     }
     
     /// Adds the required notification observers
@@ -225,6 +249,11 @@ open class MessageInputView: UIView {
         
         delegate?.messageInputView(self, textViewTextDidChangeTo: trimmedText)
         invalidateIntrinsicContentSize()
+        
+        performLayout(true) {
+//            setNewItems()
+            self.layoutIfNeeded()
+        }
     }
     
     @objc
