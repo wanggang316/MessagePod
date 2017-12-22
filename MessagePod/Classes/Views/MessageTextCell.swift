@@ -143,12 +143,14 @@ open class MessageTextCell: UITableViewCell {
         if (self.message == nil) || (newMessage != self.message!) {
             self.message = newMessage
             self.layoutAttributes = attributes
-            self.bubbleImageView.image = bubbleImage
+
             
             self.bubbleImageView.frame = attributes.messageContainerFrame
             self.messageLabel.frame = CGRect.init(x: attributes.messageLabelInsets.left, y: attributes.messageLabelInsets.top, width: attributes.messageContainerFrame.width - attributes.messageLabelInsets.left - attributes.messageLabelInsets.right, height: attributes.messageContainerFrame.height - attributes.messageLabelInsets.top - attributes.messageLabelInsets.bottom)
             self.avatarImageView.frame = attributes.avatarFrame
             self.avatarImageView.layer.cornerRadius = attributes.avatarFrame.width / 2
+            
+            self.bubbleImageView.image = stretch(bubbleImage) // bubbleImage.stretch().withRenderingMode(.alwaysTemplate)
         }
 
     }
@@ -175,6 +177,14 @@ open class MessageTextCell: UITableViewCell {
     open override func layoutSubviews() {
         super.layoutSubviews()
     }
+    
+    
+    private func stretch(_ image: UIImage) -> UIImage {
+//        let center = CGPoint(x: image.size.width / 2, y: image.size.height / 2)
+        let capInsets = UIEdgeInsets(top: 24, left: 12, bottom: 6, right: 12)
+        return image.resizableImage(withCapInsets: capInsets, resizingMode: .stretch)
+    }
+
 }
 
 //extension MessageTextCell: TTTAttributedLabelDelegate {

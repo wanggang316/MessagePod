@@ -7,7 +7,7 @@
 
 import UIKit
 
-open class MessageInputView: UIView {
+open class MessageInputView: UIView, UITextViewDelegate {
 
     open weak var delegate: MessageInputViewDelegate?
 
@@ -21,6 +21,7 @@ open class MessageInputView: UIView {
     
     open lazy var inputTextView: MessageInputTextView = {
         let textView = MessageInputTextView()
+        textView.delegate = self
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.messageInputView = self
         return textView
@@ -117,7 +118,7 @@ open class MessageInputView: UIView {
     /// Sets up the initial constraints of each subview
     private func setupConstraints() {
         
-        self.translatesAutoresizingMaskIntoConstraints = false
+//        self.translatesAutoresizingMaskIntoConstraints = false
         backgroundView.addConstraints(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
         
         textViewLayoutSet = NSLayoutConstraintSet(
@@ -149,26 +150,26 @@ open class MessageInputView: UIView {
         }
     }
     
-    internal func performLayout(_ animated: Bool, _ animations: @escaping () -> Void) {
-        
-        textViewLayoutSet?.deactivate()
-//        leftStackViewLayoutSet?.deactivate()
-//        rightStackViewLayoutSet?.deactivate()
-//        bottomStackViewLayoutSet?.deactivate()
-//        topStackViewLayoutSet?.deactivate()
-        if animated {
-            DispatchQueue.main.async {
-                UIView.animate(withDuration: 0.3, animations: animations)
-            }
-        } else {
-            UIView.performWithoutAnimation { animations() }
-        }
-        textViewLayoutSet?.activate()
-//        leftStackViewLayoutSet?.activate()
-//        rightStackViewLayoutSet?.activate()
-//        bottomStackViewLayoutSet?.activate()
-//        topStackViewLayoutSet?.activate()
-    }
+//    internal func performLayout(_ animated: Bool, _ animations: @escaping () -> Void) {
+//        
+//        textViewLayoutSet?.deactivate()
+////        leftStackViewLayoutSet?.deactivate()
+////        rightStackViewLayoutSet?.deactivate()
+////        bottomStackViewLayoutSet?.deactivate()
+////        topStackViewLayoutSet?.deactivate()
+//        if animated {
+//            DispatchQueue.main.async {
+//                UIView.animate(withDuration: 0.3, animations: animations)
+//            }
+//        } else {
+//            UIView.performWithoutAnimation { animations() }
+//        }
+//        textViewLayoutSet?.activate()
+////        leftStackViewLayoutSet?.activate()
+////        rightStackViewLayoutSet?.activate()
+////        bottomStackViewLayoutSet?.activate()
+////        topStackViewLayoutSet?.activate()
+//    }
     
     /// Adds the required notification observers
     private func setupObservers() {
@@ -250,10 +251,6 @@ open class MessageInputView: UIView {
         delegate?.messageInputView(self, textViewTextDidChangeTo: trimmedText)
         invalidateIntrinsicContentSize()
         
-        performLayout(true) {
-//            setNewItems()
-            self.layoutIfNeeded()
-        }
     }
     
     @objc
@@ -264,6 +261,16 @@ open class MessageInputView: UIView {
     @objc
     open func textViewDidEndEditing() {
 //        self.items.forEach { $0.keyboardEditingEndsAction() }
+    }
+    
+    
+    // MARK: - UITextViewDelegate
+    public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            self.delegate?.messageInputView(self, didPressSendButtonWith: textView.text)
+            return false
+        }
+        return true
     }
     
 }

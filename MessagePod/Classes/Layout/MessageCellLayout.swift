@@ -44,12 +44,7 @@ open class MessageCellLayout {
             return attributes
         } else {
             let newAttributes = createMessageLayoutAttributes(for: message, at: indexPath)
-            
-//            let shouldCache = messageDelegate.shouldCacheLayoutAttributes(for: message) && intermediateAttributesCache.count < attributesCacheMaxSize
-//
-//            if shouldCache {
-                messageCellAttributes[String(message.text.hashValue)] = newAttributes
-//            }
+            messageCellAttributes[String(message.text.hashValue)] = newAttributes
             return newAttributes
         }
         
@@ -58,10 +53,12 @@ open class MessageCellLayout {
     
     func createMessageLayoutAttributes(for message: Message, at indexPath: IndexPath) -> MessageCellLayoutAttributes {
         
-        let attributes = MessageCellLayoutAttributes(message: message, indexPath: indexPath)
+//        attributes.avatarPosition =
+        let position = messageDelegate.avatarPosition(for: message, at: indexPath, in: messageTableView!)
+
+        let attributes = MessageCellLayoutAttributes(message: message, indexPath: indexPath, avatarPosition: position)
         
         // None of these are dependent on other attributes
-        attributes.avatarPosition = avatarPosition(for: attributes)
         attributes.avatarSize = avatarSize(for: attributes)
         attributes.messageContainerPadding = messageContainerPadding(for: attributes)
         attributes.messageLabelInsets = messageLabelInsets(for: attributes)

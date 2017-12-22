@@ -12,7 +12,8 @@ final class MessageCellLayoutAttributes {
     var message: Message
     var indexPath: IndexPath
     
-    init(message: Message, indexPath: IndexPath) {
+    init(message: Message, indexPath: IndexPath, avatarPosition: AvatarPosition) {
+        self.avatarPosition = avatarPosition
         self.message = message
         self.indexPath = indexPath
     }
@@ -23,7 +24,7 @@ final class MessageCellLayoutAttributes {
 
     
     // avatar
-    var avatarPosition: AvatarPosition = AvatarPosition.init(side: .cellLeading, margin: UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0))
+    var avatarPosition: AvatarPosition// = AvatarPosition.init(side: .cellLeading, margin: UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0))
     var avatarSize: CGSize = CGSize.init(width: 30, height: 30)
     
     // message label

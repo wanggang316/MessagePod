@@ -21,13 +21,13 @@ open class MessageViewController: UIViewController {
     lazy var outBubbleImage: UIImage = {
         var name = "bubble_out@2x"
         let path = Bundle.imagePath(for: name)!
-        return UIImage.init(contentsOfFile: path)!.stretch()
+        return UIImage.init(contentsOfFile: path)!//.stretch()
     }()
     
     lazy var inBubbleImage: UIImage = {
         var name = "bubble_in@2x"
         let path = Bundle.imagePath(for: name)!
-        return UIImage.init(contentsOfFile: path)!.stretch()
+        return UIImage.init(contentsOfFile: path)!//.stretch()
     }()
     
     lazy var outAvatarPosition: AvatarPosition = AvatarPosition.init(side: .cellTrailing, margin: UIEdgeInsets.init(top: 10, left: 0, bottom: 0, right: 10))
@@ -83,6 +83,7 @@ open class MessageViewController: UIViewController {
         messagesTableView.alwaysBounceVertical = true
 
         self.messagesTableView.keyboardDismissMode = .onDrag
+        self.messageInputView.delegate = self
         
         self.messagesTableView.messageDataSource = self
         self.messagesTableView.messageDelegate = self
@@ -104,6 +105,7 @@ open class MessageViewController: UIViewController {
 //        newMessageInputView.layoutSubviews()
 //        messageInputView = newMessageInputView
 //        self.view.addSubview(messageInputView)
+        
         
         self.setupConstraints()
         reloadInputViews()
@@ -293,7 +295,11 @@ extension MessageViewController: MessageViewDelegate {
         }
     }
     public func messageLabelInset(for message: Message, at indexPath: IndexPath, in messageTableView: MessageTableView) -> UIEdgeInsets {
-        return UIEdgeInsets.init(top: 10, left: 10, bottom: 10, right: 10)
+        if sender == message.sender {
+            return UIEdgeInsets.init(top: 6, left: 6, bottom: 6, right: 6 + 6)
+        } else {
+            return UIEdgeInsets.init(top: 6, left: 6 + 6, bottom: 6, right: 6)
+        }
     }
     
     /// - avatar
@@ -465,10 +471,18 @@ fileprivate extension MessageViewController {
 extension MessageViewController: MessageInputViewDelegate {
     
     public func messageInputView(_ inputView: MessageInputView, didPressSendButtonWith text: String) {
-//        messageList.append(MockMessage(text: text, sender: currentSender(), messageId: UUID().uuidString, date: Date()))
-//        inputBar.inputTextView.text = String()
-//        messagesCollectionView.insertSections([messageList.count - 1])
-//        messagesCollectionView.scrollToBottom()
+        
+        let id = drand48() > 0.5 ? "1" : "2"
+        var avatar = #imageLiteral(resourceName: "avatar")
+        if id == "2" {
+            avatar = #imageLiteral(resourceName: "avatar-placeholder")
+        }
+        
+        let newMessage1 = Message(sender: Sender.init(id: id, name: "", image: avatar), text: text, actions: nil)
+        inputView.inputTextView.text = String()
+        messages?.append(newMessage1)
+        messagesTableView.insertRows(at: [IndexPath.init(row: messages!.count - 1, section: 0)], with: UITableViewRowAnimation.none)
+        messagesTableView.scrollToBottom()
     }
     
     public func messageInputView(_ inputView: MessageInputView, textViewTextDidChangeTo text: String) {
@@ -479,10 +493,7 @@ extension MessageViewController: MessageInputViewDelegate {
 extension MessageViewController: MessageInputBarDelegate {
     
     public func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
-//        messageList.append(MockMessage(text: text, sender: currentSender(), messageId: UUID().uuidString, date: Date()))
-//        inputBar.inputTextView.text = String()
-//        messagesCollectionView.insertSections([messageList.count - 1])
-//        messagesCollectionView.scrollToBottom()
+        
     }
     
 }

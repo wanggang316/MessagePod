@@ -23,6 +23,8 @@
 		1E1CE28FFCCD7499620B47C910E9B9E9 /* BeLogical.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3BCC28D16F758E6F3EA5591636BC75 /* BeLogical.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		21B18399E87D0EF8B2A5964507CFFC88 /* Closures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0DD7BC9513E4148DCA11CA9E080B88 /* Closures.swift */; };
 		22E9F6FA56858A5F7A5D664E5968ECB0 /* NMBExceptionCapture.h in Headers */ = {isa = PBXBuildFile; fileRef = 973D85D4D9220FE2834B5648E43D7A07 /* NMBExceptionCapture.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2329688D1FEBBE0C00EF9A2B /* MessagePodAssets.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2329688C1FEBBE0C00EF9A2B /* MessagePodAssets.bundle */; };
+		2329688F1FECC71600EF9A2B /* MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2329688E1FECC71600EF9A2B /* MessageType.swift */; };
 		232C281E1FE7F8930066724E /* MessageInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232C281D1FE7F8930066724E /* MessageInputView.swift */; };
 		232C28201FE806410066724E /* MessageInputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232C281F1FE806410066724E /* MessageInputTextView.swift */; };
 		232C28221FE806C30066724E /* NSLayoutConstraintSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232C28211FE806C30066724E /* NSLayoutConstraintSet.swift */; };
@@ -315,6 +317,8 @@
 		1FFCF67CD068BF61F70AFB2DCAB647AC /* Pods-MessagePod_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-MessagePod_Example-resources.sh"; sourceTree = "<group>"; };
 		20B3718702478F87CA84B0E4291808DC /* AvatarPosition.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AvatarPosition.swift; sourceTree = "<group>"; };
 		22B7867A85F82AA4EEEB32AAEB2C8684 /* Pods-MessagePod_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MessagePod_Example-acknowledgements.plist"; sourceTree = "<group>"; };
+		2329688C1FEBBE0C00EF9A2B /* MessagePodAssets.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MessagePodAssets.bundle; sourceTree = "<group>"; };
+		2329688E1FECC71600EF9A2B /* MessageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageType.swift; sourceTree = "<group>"; };
 		232C281D1FE7F8930066724E /* MessageInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputView.swift; sourceTree = "<group>"; };
 		232C281F1FE806410066724E /* MessageInputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputTextView.swift; sourceTree = "<group>"; };
 		232C28211FE806C30066724E /* NSLayoutConstraintSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLayoutConstraintSet.swift; sourceTree = "<group>"; };
@@ -702,6 +706,15 @@
 			path = MessagePod/Classes/Views;
 			sourceTree = "<group>";
 		};
+		2329688B1FEBBE0C00EF9A2B /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				2329688C1FEBBE0C00EF9A2B /* MessagePodAssets.bundle */,
+			);
+			name = Assets;
+			path = MessagePod/Assets;
+			sourceTree = "<group>";
+		};
 		232C28291FE81D9D0066724E /* input */ = {
 			isa = PBXGroup;
 			children = (
@@ -1056,6 +1069,7 @@
 		B2A5CBA7A2300F2602354C311169204B /* MessagePod */ = {
 			isa = PBXGroup;
 			children = (
+				2329688B1FEBBE0C00EF9A2B /* Assets */,
 				F0BDFB7C8735596DFEC2F1435A0F2FFD /* Controllers */,
 				B13A516F2862E1E954ADC50BEB184EE0 /* Extensions */,
 				DB92397B73935128E33E457518D38C6F /* Layout */,
@@ -1100,6 +1114,7 @@
 			children = (
 				E1062AD2223C4416F386300D3AA19FFE /* Message.swift */,
 				A9466A7D6C536ADB9BCC86DE028E092D /* Sender.swift */,
+				2329688E1FECC71600EF9A2B /* MessageType.swift */,
 			);
 			name = Models;
 			path = MessagePod/Classes/Models;
@@ -1401,6 +1416,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2329688D1FEBBE0C00EF9A2B /* MessagePodAssets.bundle in Resources */,
 				A9723AE21903E5715D1DF8252A23842A /* MessagePodAssets.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1513,6 +1529,7 @@
 				E8901574CAE12347F6C022958C705D8F /* MessagePod-dummy.m in Sources */,
 				44FD013C37B9834800D810EC9211F98F /* MessageTableView.swift in Sources */,
 				81CDA01B6B9BB58F49DCD85B75091058 /* MessageTextCell.swift in Sources */,
+				2329688F1FECC71600EF9A2B /* MessageType.swift in Sources */,
 				232C28201FE806410066724E /* MessageInputTextView.swift in Sources */,
 				3DD1210A8A49584FB41CA96027BA8EAC /* MessageViewController.swift in Sources */,
 				10B6B5F3EE48778091C9E1A9F121C212 /* MessageViewDataSource.swift in Sources */,
