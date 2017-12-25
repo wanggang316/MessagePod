@@ -9,4 +9,9 @@ import Foundation
 
 public protocol MessageType {
     
+    var sender: Sender { get }
+    var id: String { get }
+    var data: MessageData { get }
+    var date: Date { get }
+    
 }

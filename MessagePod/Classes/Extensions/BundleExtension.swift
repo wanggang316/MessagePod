@@ -9,7 +9,7 @@ import Foundation
 
 extension Bundle {
     static func messagePodBundle() -> Bundle {
-        let frameworkBundle = Bundle.init(for: MessageViewController.self)
+        let frameworkBundle = Bundle.init(for: MessagesViewController.self)
         guard let bundleURL = frameworkBundle.url(forResource: "MessagePodAssets", withExtension: "bundle") else {
             fatalError("MessagePod: Could not create path to the assets bundle")
         }

@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2329E8F71FE4D146001CD3AA /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2329E8F61FE4D146001CD3AA /* ConversationViewController.swift */; };
-		2329E9111FE52EB8001CD3AA /* MessageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2329E9101FE52EB8001CD3AA /* MessageData.swift */; };
+		2329E9111FE52EB8001CD3AA /* MessageFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2329E9101FE52EB8001CD3AA /* MessageFactory.swift */; };
+		2355C26D1FF1695000CF9455 /* AssistantMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2355C26C1FF1695000CF9455 /* AssistantMessage.swift */; };
 		23E1EB021FEBBC4300A8F98B /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23E1EB011FEBBC4300A8F98B /* MobileCoreServices.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
@@ -34,7 +35,8 @@
 		149E3F0FBFD55C5360E6CF0A /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		1AB824E68CC4D5CA8F783DEB /* Pods-MessagePod_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MessagePod_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MessagePod_Tests/Pods-MessagePod_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		2329E8F61FE4D146001CD3AA /* ConversationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
-		2329E9101FE52EB8001CD3AA /* MessageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageData.swift; sourceTree = "<group>"; };
+		2329E9101FE52EB8001CD3AA /* MessageFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFactory.swift; sourceTree = "<group>"; };
+		2355C26C1FF1695000CF9455 /* AssistantMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssistantMessage.swift; sourceTree = "<group>"; };
 		23E1EB011FEBBC4300A8F98B /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		276C8533C1213C36327B8BF0 /* Pods_MessagePod_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MessagePod_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		29FDE1DC8DD591258BEB8501 /* Pods-MessagePod_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MessagePod_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MessagePod_Tests/Pods-MessagePod_Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -117,7 +119,8 @@
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
-				2329E9101FE52EB8001CD3AA /* MessageData.swift */,
+				2329E9101FE52EB8001CD3AA /* MessageFactory.swift */,
+				2355C26C1FF1695000CF9455 /* AssistantMessage.swift */,
 			);
 			name = "Example for MessagePod";
 			path = MessagePod;
@@ -391,10 +394,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2355C26D1FF1695000CF9455 /* AssistantMessage.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				2329E8F71FE4D146001CD3AA /* ConversationViewController.swift in Sources */,
-				2329E9111FE52EB8001CD3AA /* MessageData.swift in Sources */,
+				2329E9111FE52EB8001CD3AA /* MessageFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
