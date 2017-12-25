@@ -20,25 +20,31 @@ open class TextMessageCell: MessageCollectionViewCell {
         }
     }
     
-    open var messageLabel = YYLabel()
+    open lazy var messageLabel: YYLabel = {
+        let label = YYLabel()
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.numberOfLines = 0
+        label.isUserInteractionEnabled = true
+        label.displaysAsynchronously = true
+        return label
+    }()
 
     var textInsets: UIEdgeInsets = .zero
     
     open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
         if let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes {
-            textInsets = attributes.messageLabelInsets
-            messageLabel.font = attributes.messageLabelFont
+//            textInsets = attributes.messageLabelInsets
+            messageLabel.textContainerInset = attributes.messageLabelInsets
+//            messageLabel.font = attributes.messageLabelFont
         }
     }
     
     open override func prepareForReuse() {
         super.prepareForReuse()
-        messageLabel.numberOfLines = 0
-        messageLabel.isUserInteractionEnabled = true
-        messageLabel.displaysAsynchronously = true
-        messageLabel.attributedText = nil
-        messageLabel.text = nil
+      
+//        messageLabel.attributedText = nil
+//        messageLabel.text = nil
     }
     
     open override func setupSubviews() {
@@ -48,7 +54,8 @@ open class TextMessageCell: MessageCollectionViewCell {
     }
     
     open func setupConstraints() {
-        messageLabel.addConstraints(messageContainerView.topAnchor, left: messageContainerView.leftAnchor, bottom: messageContainerView.bottomAnchor, right: messageContainerView.rightAnchor, topConstant: textInsets.top, leftConstant: textInsets.left, bottomConstant: textInsets.bottom, rightConstant: textInsets.right)
+        messageLabel.fillSuperview()
+//        messageLabel.addConstraints(messageContainerView.topAnchor, left: messageContainerView.leftAnchor, bottom: messageContainerView.bottomAnchor, right: messageContainerView.rightAnchor, topConstant: textInsets.top, leftConstant: textInsets.left, bottomConstant: textInsets.bottom, rightConstant: textInsets.right)
     }
 
     

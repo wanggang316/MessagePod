@@ -43,7 +43,7 @@ open class MessageContainerView: UIImageView {
             imageMask.image = style.image
             sizeMaskToView()
             mask = imageMask
-            image = nil
+            image = style.image
         case .none:
             mask = nil
             image = nil

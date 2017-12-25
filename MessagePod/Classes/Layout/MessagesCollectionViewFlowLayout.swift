@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
+open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     // MARK: - Properties
     open var messageLabelFont: UIFont
@@ -15,6 +15,9 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
     open var attributesCacheMaxSize: Int = 500
 
+    open override class var layoutAttributesClass: AnyClass {
+        return MessagesCollectionViewLayoutAttributes.self
+    }
 
     typealias MessageID = String
     
@@ -55,7 +58,7 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         sectionInset = UIEdgeInsets.init(top: 4, left: 8, bottom: 4, right: 8)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -76,7 +79,7 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         intermediateAttributesCache.removeAll()
     }
     
-    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+    override open func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         if collectionView?.bounds.width != newBounds.width {
             removeAllCachedAttributes()
             return true
@@ -103,6 +106,18 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         }
         
         return attributesArray
+    }
+    
+    open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        
+        guard let attributes = super.layoutAttributesForItem(at: indexPath) as? MessagesCollectionViewLayoutAttributes else { return nil }
+        
+        if attributes.representedElementCategory == UICollectionElementCategory.cell {
+            configure(attributes: attributes)
+        }
+        
+        return attributes
+        
     }
     
     open func sizeForItem(at indexPath: IndexPath) -> CGSize {

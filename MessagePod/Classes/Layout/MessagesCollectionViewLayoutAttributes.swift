@@ -13,7 +13,7 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
     
     var avatarFrame: CGRect = .zero
     
-    var messageLabelFont: UIFont = UIFont.preferredFont(forTextStyle: .body)
+    var messageLabelFont: UIFont = UIFont.systemFont(ofSize: 14)
     var messageContainerFrame: CGRect = .zero
     var messageLabelInsets: UIEdgeInsets = .zero
     

@@ -100,9 +100,9 @@ open class MessagesViewController: UIViewController {
 //        messagesCollectionView.register(MediaMessageCell.self)
 //        messagesCollectionView.register(LocationMessageCell.self)
         
-//        messagesCollectionView.register(MessageFooterView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter)
-//        messagesCollectionView.register(MessageHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader)
-//        messagesCollectionView.register(MessageDateHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader)
+        messagesCollectionView.register(MessageFooterView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter)
+        messagesCollectionView.register(MessageHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader)
+        messagesCollectionView.register(MessageDateHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader)
         
     }
     
@@ -188,7 +188,7 @@ extension MessagesViewController: UICollectionViewDataSource {
         return messageCount > 0 ? 1 : 0
         
     }
-    
+
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
