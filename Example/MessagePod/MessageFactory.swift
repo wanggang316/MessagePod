@@ -107,4 +107,22 @@ final class MessageFactory {
         atrributeString.addAttribute(.link, value: UIFont.systemFont(ofSize: 14), range: range)
         return atrributeString
     }
+    
+    
+    // MARK: - tips data
+    let tips: [String] =  ["我要租房", "预约看房dd", "故障报修是的", "社区", "联系管家", "搭小寓", "咨询其它问题"]
+    
+    func randomTip() -> String {
+        let randomNumberTip = Int(arc4random_uniform(UInt32(tips.count)))
+        return tips[randomNumberTip]
+    }
+    
+    func getTips(count: Int) -> [String] {
+        var tips: [String] = []
+        for _ in 0..<count {
+            tips.append(randomTip())
+        }
+        return tips
+    }
+    
 }

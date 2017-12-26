@@ -114,7 +114,7 @@ open class MessageInputTextView: UITextView {
     open func setup() {
         
         font = UIFont.systemFont(ofSize: 14)
-        textColor = UIColor.init(red: 191.0 / 255.0, green: 191.0 / 255.0, blue: 191.0 / 255.0, alpha: 1.0)
+        textColor = UIColor.init(red: 112.0 / 255.0, green: 112.0 / 255.0, blue: 112.0 / 255.0, alpha: 1.0)
         textContainerInset = UIEdgeInsets(top: 8, left: 6, bottom: 8, right: 6)
         scrollIndicatorInsets = UIEdgeInsets(top: .leastNonzeroMagnitude,
                                              left: .leastNonzeroMagnitude,

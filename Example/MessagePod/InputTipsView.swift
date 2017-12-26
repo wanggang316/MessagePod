@@ -11,26 +11,52 @@ import UIKit
 class InputTipsView: UIView {
 
     // MARK: - UI ELements
-    private lazy var itemCollectionView: UICollectionView = {
-        var layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 0.0
-        layout.minimumInteritemSpacing = 10
-        let view = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-        view.dataSource = self
-        view.delegate = self
-        view.register(InputTipCell.self, forCellWithReuseIdentifier: "InputTipCell")
-        view.backgroundColor = UIColor.orange
-        view.alwaysBounceVertical = false
-        view.isScrollEnabled = false
-        return view
+
+    
+    lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.alwaysBounceVertical = false
+        return scrollView
     }()
     
     
     // MARK: - Properties
     var items: [String] = [] {
         didSet {
-            itemCollectionView.reloadData()
+            
+            for view in self.scrollView.subviews {
+                view.removeFromSuperview()
+            }
+            
+            var maxX: CGFloat = 0.0
+            let innerSpace: CGFloat = 10.0
+            for i in 0..<items.count {
+                let tip = items[i]
+                let button = tipButton(tip)
+                button.frame = CGRect.init(x: maxX + innerSpace, y: 7, width: CGFloat(tip.count * 14 + 16), height: 24)
+                maxX = button.frame.maxX
+                button.addTarget(self, action: #selector(selectTipAction), for: UIControlEvents.touchUpInside)
+                self.scrollView.addSubview(button)
+            }
+            
+            self.scrollView.contentSize = CGSize.init(width: maxX + 10, height: 35)
+            self.scrollView.contentOffset = CGPoint.init(x: 0, y: 0)
         }
+    }
+    
+    func tipButton(_ title: String) -> UIButton {
+        let button = UIButton(type: .custom)
+        button.setTitleColor(UIColor.init(red: 112.0 / 255.0, green: 112.0 / 255.0, blue: 112.0 / 255.0, alpha: 1.0), for: UIControlState.normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 13)
+        button.contentHorizontalAlignment = .center
+        button.clipsToBounds = true
+        button.layer.borderColor = UIColor.init(red: 219.0 / 255.0, green: 219.0 / 255.0, blue: 219.0 / 255.0, alpha: 1.0).cgColor
+        button.layer.borderWidth = 0.5
+        button.layer.cornerRadius = 11
+        button.setTitle(title, for: UIControlState.normal)
+        return button
     }
     
     var didSelectedItemCallback: ((String) -> Void)?
@@ -38,122 +64,28 @@ class InputTipsView: UIView {
     // MARK: - Life
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        
-        self.backgroundColor = UIColor.red
-        addSubview(itemCollectionView)
-        
-        translatesAutoresizingMaskIntoConstraints = false
+
+        self.backgroundColor = UIColor.white
+        addSubview(self.scrollView)
+
+
         // constraints
-        self.updateConstraints()
+        self.scrollView.snp.makeConstraints { make in
+            make.top.equalTo(self)
+            make.left.equalTo(self)
+            make.right.equalTo(self)
+            make.bottom.equalTo(self)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func updateConstraints() {
-        super.updateConstraints()
-
-        self.itemCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(self)
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
-//            make.bottom.equalTo(self)
-            make.height.equalTo(60)
+    // MARK: -
+    @objc func selectTipAction(sender: UIButton) {
+        if let title = sender.titleLabel?.text {
+            didSelectedItemCallback?(title)
         }
-        
-//        itemCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-//        itemCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-//        itemCollectionView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-//        itemCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-////        itemCollectionView.heightAnchor.constraint(equalToConstant: 60).isActive = true
-
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.itemCollectionView.frame = self.bounds
-
-    }
-    
-}
-
-
-
-
-
-extension InputTipsView: UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.items.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "InputTipCell", for: indexPath) as! InputTipCell
-        cell.item = self.items[indexPath.item]
-        return cell
-    }
-    
-}
-
-extension InputTipsView: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let item = self.items[indexPath.item]
-        self.didSelectedItemCallback?(item)
-    }
-}
-
-extension InputTipsView: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 100, height: collectionView.frame.height)
-    }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 0)
-    }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 0)
-    }
-}
-
-
-
-class InputTipCell: UICollectionViewCell {
-    
-    // MARK: - UI Element
-    lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor.black
-        label.font = UIFont.systemFont(ofSize: 10)
-        label.textAlignment = NSTextAlignment.center
-        label.numberOfLines = 0
-        return label
-    }()
-    
-    // MARK: - Properties
-    var item: String? {
-        didSet {
-            if let item = self.item {
-                self.titleLabel.text = item
-            }
-        }
-    }
-    
-    // MARK: - Life
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        self.contentView.backgroundColor = UIColor.white
-        self.contentView.addSubview(self.titleLabel)
-        
-        // constraint
-        titleLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor).isActive = true
-        titleLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor).isActive = true
-        titleLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
-        titleLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor).isActive = true
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
     }
 }

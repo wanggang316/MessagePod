@@ -15,7 +15,7 @@ open class MessageInputView: UIView, UITextViewDelegate {
     open var backgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .red
+        view.backgroundColor = .white
         return view
     }()
     
@@ -34,7 +34,6 @@ open class MessageInputView: UIView, UITextViewDelegate {
         button.setImage(#imageLiteral(resourceName: "keyboard"), for: UIControlState.normal)
         button.setImage(#imageLiteral(resourceName: "voice"), for: UIControlState.selected)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = UIColor.green
         button.addTarget(self, action: #selector(taggleAction), for: UIControlEvents.touchUpInside)
         return button
     }()
@@ -42,10 +41,11 @@ open class MessageInputView: UIView, UITextViewDelegate {
     open lazy var recordButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setTitle("按住说话", for: UIControlState.normal)
-        button.setTitleColor(UIColor.init(red: 191.0 / 255.0, green: 191.0 / 255.0, blue: 191.0 / 255.0, alpha: 1.0), for: UIControlState.normal)
+        button.setTitleColor(UIColor.init(red: 112.0 / 255.0, green: 112.0 / 255.0, blue: 112.0 / 255.0, alpha: 1.0), for: UIControlState.normal)
+        button.setTitleColor(UIColor.init(red: 191.0 / 255.0, green: 191.0 / 255.0, blue: 191.0 / 255.0, alpha: 1.0), for: UIControlState.highlighted)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = UIColor.brown
+        button.backgroundColor = UIColor.white
         button.clipsToBounds = true
         button.layer.cornerRadius = 15
         button.layer.borderWidth = 0.5
@@ -57,10 +57,16 @@ open class MessageInputView: UIView, UITextViewDelegate {
     open lazy var topView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.blue
+        view.backgroundColor = UIColor.white
         return view
     }()
     
+    open lazy var topLineView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor.init(red: 225.0 / 255.0, green: 225.0 / 255.0, blue: 225.0 / 255.0, alpha: 1.0)
+        return view
+    }()
     
     open var padding: UIEdgeInsets = UIEdgeInsets(top: 6 + 36, left: 44, bottom: 6, right: 34) {
         didSet {
@@ -102,13 +108,16 @@ open class MessageInputView: UIView, UITextViewDelegate {
     
     // MARK: - Auto-Layout Management
 //    private var topViewLayoutSet: NSLayoutConstraintSet?
-    private var topViewHeightAnchor: NSLayoutConstraint?
+//    private var topViewHeightAnchor: NSLayoutConstraint?
 
     private var textViewLayoutSet: NSLayoutConstraintSet?
     private var textViewHeightAnchor: NSLayoutConstraint?
     
+    private var recordButtonLayoutSet: NSLayoutConstraintSet?
+    
     private var taggleButtonLayoutSet: NSLayoutConstraintSet?
     
+    private var windowAnchor: NSLayoutConstraint?
     
     private var tempInputText: String?
     
@@ -116,12 +125,12 @@ open class MessageInputView: UIView, UITextViewDelegate {
     // MARK: - Life
     public convenience init() {
         self.init(frame: .zero)
-        self.backgroundColor = UIColor.yellow
+        self.backgroundColor = UIColor.white
     }
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.yellow
+        self.backgroundColor = UIColor.white
         setup()
     }
     
@@ -152,6 +161,7 @@ open class MessageInputView: UIView, UITextViewDelegate {
         addSubview(taggleButton)
         addSubview(recordButton)
         addSubview(topView)
+        addSubview(topLineView)
     }
     
     /// Sets up the initial constraints of each subview
@@ -161,33 +171,57 @@ open class MessageInputView: UIView, UITextViewDelegate {
         
         backgroundView.addConstraints(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
 
-
-//        topView.heightAnchor.constraint(equalToConstant: 36)
-        NSLayoutConstraintSet(
-            top:    topView.topAnchor.constraint(equalTo: topAnchor, constant:0),
-            bottom: topView.bottomAnchor.constraint(equalTo: inputTextView.topAnchor, constant: -6),
-            left:   topView.leftAnchor.constraint(equalTo: leftAnchor, constant: 0),
-            right:  topView.rightAnchor.constraint(equalTo: rightAnchor, constant: 0)
-            ).activate()
-        
         // textView
-        textViewLayoutSet = NSLayoutConstraintSet(
+        if #available(iOS 11.0, *) {
+            textViewLayoutSet = NSLayoutConstraintSet(
+                top:    inputTextView.topAnchor.constraint(equalTo: topAnchor, constant: padding.top),
+                bottom: inputTextView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -padding.bottom),
+                left:   inputTextView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: padding.left),
+                right:  inputTextView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -padding.right)
+                ).activate()
+        } else {
+            textViewLayoutSet = NSLayoutConstraintSet(
             top:    inputTextView.topAnchor.constraint(equalTo: topAnchor, constant: padding.top),
             bottom: inputTextView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding.bottom),
             left:   inputTextView.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left),
             right:  inputTextView.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right)
             ).activate()
+        }
         textViewHeightAnchor = inputTextView.heightAnchor.constraint(equalToConstant: maxHeight)
+       
         
         // recordButton
-        NSLayoutConstraintSet(
+        recordButtonLayoutSet = NSLayoutConstraintSet(
             top:    recordButton.topAnchor.constraint(equalTo: topAnchor, constant: padding.top),
 //            bottom: recordButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding.bottom),
             left:   recordButton.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left),
             right:  recordButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right)
             ).activate()
-        topViewHeightAnchor = recordButton.heightAnchor.constraint(equalToConstant: 34)
-        topViewHeightAnchor?.isActive = true
+        recordButton.heightAnchor.constraint(equalToConstant: 34).isActive = true
+        
+        if #available(iOS 11.0, *) {
+            // Switch to safeAreaLayoutGuide
+            textViewLayoutSet?.bottom = inputTextView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -padding.bottom)
+            textViewLayoutSet?.left = inputTextView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: padding.left)
+            textViewLayoutSet?.right = inputTextView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -padding.right)
+        }
+        
+        
+        NSLayoutConstraintSet(
+            top:    topView.topAnchor.constraint(equalTo: topAnchor, constant:1),
+            bottom: topView.bottomAnchor.constraint(equalTo: inputTextView.topAnchor, constant: -6),
+            left:   topView.leftAnchor.constraint(equalTo: leftAnchor, constant: 0),
+            right:  topView.rightAnchor.constraint(equalTo: rightAnchor, constant: 0)
+            ).activate()
+        
+        NSLayoutConstraintSet(
+            top:    topLineView.topAnchor.constraint(equalTo: topAnchor, constant:0),
+//            bottom: topLineView.bottomAnchor.constraint(equalTo: inputTextView.topAnchor, constant: -6),
+            left:   topLineView.leftAnchor.constraint(equalTo: leftAnchor, constant: 0),
+            right:  topLineView.rightAnchor.constraint(equalTo: rightAnchor, constant: 0)
+            ).activate()
+        topLineView.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
+
         
         // taggle button
         taggleButtonLayoutSet = NSLayoutConstraintSet(
@@ -195,49 +229,26 @@ open class MessageInputView: UIView, UITextViewDelegate {
             left:   taggleButton.leftAnchor.constraint(equalTo: leftAnchor, constant: 10)
             ).activate()
         
-       
-        
     }
     
     open override func didMoveToWindow() {
         super.didMoveToWindow()
+        setupConstraints(to: window)
+    }
+    
+    private func setupConstraints(to window: UIWindow?) {
         if #available(iOS 11.0, *) {
-            guard let window = window else { return }
-
-            textViewLayoutSet?.bottom?.isActive = false
-            textViewLayoutSet?.bottom = inputTextView.bottomAnchor.constraintLessThanOrEqualToSystemSpacingBelow(window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
-            textViewLayoutSet?.bottom?.isActive = true
-
-//            textViewLayoutSet?.bottom?.isActive = true
-//            textViewLayoutSet?.bottom?.isActive = true
-//            textViewLayoutSet?.activate()
-            // bottomAnchor must be set to the window to avoid a memory leak issue
-//            bottomStackViewLayoutSet?.bottom?.isActive = false
-//            bottomStackViewLayoutSet?.bottom = bottomStackView.bottomAnchor.constraintLessThanOrEqualToSystemSpacingBelow(window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
-//            bottomStackViewLayoutSet?.bottom?.isActive = true
+            guard UIScreen.main.nativeBounds.height == 2436 else { return }
+            if let window = window {
+                windowAnchor?.isActive = false
+                windowAnchor = inputTextView.bottomAnchor.constraintLessThanOrEqualToSystemSpacingBelow(window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
+                windowAnchor?.constant = -padding.bottom
+                windowAnchor?.priority = UILayoutPriority(rawValue: 750)
+                windowAnchor?.isActive = true
+            }
         }
     }
     
-//    internal func performLayout(_ animated: Bool, _ animations: @escaping () -> Void) {
-//        
-//        textViewLayoutSet?.deactivate()
-////        leftStackViewLayoutSet?.deactivate()
-////        rightStackViewLayoutSet?.deactivate()
-////        bottomStackViewLayoutSet?.deactivate()
-////        topStackViewLayoutSet?.deactivate()
-//        if animated {
-//            DispatchQueue.main.async {
-//                UIView.animate(withDuration: 0.3, animations: animations)
-//            }
-//        } else {
-//            UIView.performWithoutAnimation { animations() }
-//        }
-//        textViewLayoutSet?.activate()
-////        leftStackViewLayoutSet?.activate()
-////        rightStackViewLayoutSet?.activate()
-////        bottomStackViewLayoutSet?.activate()
-////        topStackViewLayoutSet?.activate()
-//    }
     
     /// Adds the required notification observers
     private func setupObservers() {
@@ -286,6 +297,12 @@ open class MessageInputView: UIView, UITextViewDelegate {
     private func updatePadding() {
         textViewLayoutSet?.top?.constant = padding.top
         textViewLayoutSet?.bottom?.constant = -padding.bottom
+        
+        recordButtonLayoutSet?.top?.constant = padding.top
+//        recordButtonLayoutSet?.bottom?.constant = -padding.bottom
+        
+        windowAnchor?.constant = -padding.bottom
+//        invalidateIntrinsicContentSize()
     }
     
     private func updateTextViewPadding() {
@@ -353,6 +370,8 @@ open class MessageInputView: UIView, UITextViewDelegate {
     @objc func recordAction() {
         
     }
+    
+    
     
     public func clearInputText() {
         self.inputTextView.text = nil

@@ -15,8 +15,21 @@ class ConversationViewController: MessagesViewController {
 
     let refreshControl = UIRefreshControl()
     
-    var tipsView: InputTipsView = {
-        let view = InputTipsView.init(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 60))
+    lazy var tipsView: InputTipsView = {
+        let view = InputTipsView.init(frame: CGRect.zero)
+        view.frame = CGRect.init(x: 0, y: 100, width: UIScreen.main.bounds.width, height: 35)
+        view.didSelectedItemCallback = { [weak self] text in
+            guard let `self` = self else { return }
+            let id = UUID().uuidString
+            let message = AssistantMessage.init(data: .text(text, nil), sender: MessageFactory.shared.currentSender, id: id, date: Date())
+            self.messages.append(message)
+            self.messageInputBar.inputTextView.text = String()
+            self.messagesCollectionView.insertSections([self.messages.count - 1])
+            self.messagesCollectionView.scrollToBottom()
+            
+            self.tipsView.items = MessageFactory.shared.getTips(count: 7)
+            
+        }
         return view
     }()
 
@@ -53,7 +66,17 @@ class ConversationViewController: MessagesViewController {
         
         defaultStyle()
         
-        configTips(items: ["hello"])
+        
+        messageInputBar.topView.addSubview(tipsView)
+
+        
+        tipsView.translatesAutoresizingMaskIntoConstraints = false
+        tipsView.snp.makeConstraints { make in
+            make.edges.equalTo(messageInputBar.topView)
+        }
+        
+        configTips(items: ["我要租房", "预约看房", "故障报修", "社区攻略", "联系管家", "勾搭小寓", "咨询其它问题"])
+//        configTips(items: ["我要租房"])
 
     }
 
@@ -68,11 +91,27 @@ class ConversationViewController: MessagesViewController {
 //        messagesCollectionView.insertSections([messages.count - 1])
 //        messagesCollectionView.scrollToBottom()
         
-        configTips(items: ["hello"])
+//        configTips(items: ["hello"])
+        messageInputBar.padding.top =  messageInputBar.padding.top == 6 ? 6 + 36 : 6
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+//        tipsView.topAnchor.constraint(equalTo: messageInputBar.topView.topAnchor, constant: 0).isActive = true
+//        tipsView.bottomAnchor.constraint(equalTo: messageInputBar.topView.bottomAnchor, constant: 0).isActive = true
+//        tipsView.leadingAnchor.constraint(equalTo: messageInputBar.topView.leadingAnchor, constant: 0).isActive = true
+//        tipsView.trailingAnchor.constraint(equalTo: messageInputBar.topView.trailingAnchor, constant: 0).isActive = true
+        
+    }
     
     func configTips(items: [String]) {
+        
+        
+        
+  
+        tipsView.items = items
+
         
         if items.count == 0 {
             
@@ -86,7 +125,6 @@ class ConversationViewController: MessagesViewController {
 //            label.text = "nathan.tannar is typing..."
 //            label.font = UIFont.boldSystemFont(ofSize: 16)
             
-            tipsView.items = items
             
 //            messageInputBar.topStackView.addArrangedSubview(tipsView)
 //
