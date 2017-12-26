@@ -22,9 +22,6 @@
     }
   },
   "dependencies": {
-    "TTTAttributedLabel": [
-      "~> 2.0"
-    ],
     "YYText": [
 
     ]
