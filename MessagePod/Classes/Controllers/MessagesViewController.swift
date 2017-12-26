@@ -13,7 +13,7 @@ open class MessagesViewController: UIViewController {
     
     open var messagesCollectionView = MessagesCollectionView()
     
-    open var messageInputBar = MessageInputBar()
+    open var messageInputBar = MessageInputView()
 
 //    open var sender: Sender = Sender.init(id: "2", name: "", image: UIImage.init())
     

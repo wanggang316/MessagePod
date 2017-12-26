@@ -82,7 +82,7 @@ open class MessageInputBar: UIView {
      2. It's alignment is initially set to .fill
      */
     open let topStackView: InputStackView = {
-        let stackView = InputStackView(axis: .vertical, spacing: 0)
+        let stackView = InputStackView(axis: .horizontal, spacing: 0)
         stackView.alignment = .fill
         return stackView
     }()

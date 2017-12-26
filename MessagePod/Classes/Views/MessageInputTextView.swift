@@ -28,7 +28,7 @@ open class MessageInputTextView: UITextView {
     open let placeholderLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.textColor = .lightGray
+        label.textColor = UIColor.init(red: 191.0 / 255.0, green: 191.0 / 255.0, blue: 191.0 / 255.0, alpha: 1.0)
         label.text = "New Message"
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -50,7 +50,7 @@ open class MessageInputTextView: UITextView {
     }
     
     /// The UIEdgeInsets the placeholderLabel has within the InputTextView
-    open var placeholderLabelInsets: UIEdgeInsets = UIEdgeInsets(top: 4, left: 7, bottom: 4, right: 7) {
+    open var placeholderLabelInsets: UIEdgeInsets = UIEdgeInsets(top: 4, left: 12, bottom: 4, right: 7) {
         didSet {
             updateConstraintsForPlaceholderLabel()
         }
@@ -113,16 +113,17 @@ open class MessageInputTextView: UITextView {
     /// Sets up the default properties
     open func setup() {
         
-        font = UIFont.preferredFont(forTextStyle: .body)
-        textContainerInset = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
+        font = UIFont.systemFont(ofSize: 14)
+        textColor = UIColor.init(red: 191.0 / 255.0, green: 191.0 / 255.0, blue: 191.0 / 255.0, alpha: 1.0)
+        textContainerInset = UIEdgeInsets(top: 8, left: 6, bottom: 8, right: 6)
         scrollIndicatorInsets = UIEdgeInsets(top: .leastNonzeroMagnitude,
                                              left: .leastNonzeroMagnitude,
                                              bottom: .leastNonzeroMagnitude,
                                              right: .leastNonzeroMagnitude)
         isScrollEnabled = false
-        layer.cornerRadius = 5.0
-        layer.borderWidth = 1.25
-        layer.borderColor = UIColor.lightGray.cgColor
+        layer.cornerRadius = 15
+        layer.borderWidth = 0.5
+        layer.borderColor = UIColor.init(red: 225.0 / 255.0, green: 225.0 / 255.0, blue: 225.0 / 255.0, alpha: 1.0).cgColor
         setupPlaceholderLabel()
     }
     
@@ -131,15 +132,15 @@ open class MessageInputTextView: UITextView {
         
         addSubview(placeholderLabel)
         placeholderLabelConstraintSet = NSLayoutConstraintSet(
-            top:     placeholderLabel.topAnchor.constraint(equalTo: topAnchor, constant: placeholderLabelInsets.top),
-            bottom:  placeholderLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -placeholderLabelInsets.bottom),
+//            top:     placeholderLabel.topAnchor.constraint(equalTo: topAnchor, constant: placeholderLabelInsets.top),
+//            bottom:  placeholderLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -placeholderLabelInsets.bottom),
             left:    placeholderLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: placeholderLabelInsets.left),
             right:   placeholderLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -placeholderLabelInsets.right),
             centerX: placeholderLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             centerY: placeholderLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
         )
-        placeholderLabelConstraintSet?.centerX?.priority = .defaultLow
-        placeholderLabelConstraintSet?.centerY?.priority = .defaultLow
+//        placeholderLabelConstraintSet?.centerX?.priority = .defaultLow
+//        placeholderLabelConstraintSet?.centerY?.priority = .defaultLow
         placeholderLabelConstraintSet?.activate()
     }
     

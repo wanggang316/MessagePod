@@ -15,7 +15,7 @@ open class MessageInputView: UIView, UITextViewDelegate {
     open var backgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .inputBarGray
+        view.backgroundColor = .red
         return view
     }()
     
@@ -24,23 +24,51 @@ open class MessageInputView: UIView, UITextViewDelegate {
         textView.delegate = self
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.messageInputView = self
+        textView.placeholder = "说点什么..."
         return textView
     }()
     
+    
     open lazy var taggleButton: UIButton = {
         let button = UIButton(type: .custom)
-//        button.addTarget(self, action: #selector(), for: <#T##UIControlEvents#>)
+        button.setImage(#imageLiteral(resourceName: "keyboard"), for: UIControlState.normal)
+        button.setImage(#imageLiteral(resourceName: "voice"), for: UIControlState.selected)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = UIColor.green
+        button.addTarget(self, action: #selector(taggleAction), for: UIControlEvents.touchUpInside)
         return button
     }()
     
+    open lazy var recordButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setTitle("按住说话", for: UIControlState.normal)
+        button.setTitleColor(UIColor.init(red: 191.0 / 255.0, green: 191.0 / 255.0, blue: 191.0 / 255.0, alpha: 1.0), for: UIControlState.normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = UIColor.brown
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 15
+        button.layer.borderWidth = 0.5
+        button.layer.borderColor = UIColor.init(red: 225.0 / 255.0, green: 225.0 / 255.0, blue: 225.0 / 255.0, alpha: 1.0).cgColor
+        button.addTarget(self, action: #selector(recordAction), for: UIControlEvents.touchUpInside)
+        return button
+    }()
     
-    open var padding: UIEdgeInsets = UIEdgeInsets(top: 6, left: 12, bottom: 6, right: 12) {
+    open lazy var topView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor.blue
+        return view
+    }()
+    
+    
+    open var padding: UIEdgeInsets = UIEdgeInsets(top: 6 + 36, left: 44, bottom: 6, right: 34) {
         didSet {
             updatePadding()
         }
     }
     
-    open var textViewPadding: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8) {
+    open var textViewPadding: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) {
         didSet {
             updateTextViewPadding()
         }
@@ -58,7 +86,7 @@ open class MessageInputView: UIView, UITextViewDelegate {
     public private(set) var previousIntrinsicContentSize: CGSize?
 
     
-    open var maxHeight: CGFloat = UIScreen.main.bounds.height / 3 {
+    open var maxHeight: CGFloat = 100 {
         didSet {
             textViewHeightAnchor?.constant = maxHeight
             invalidateIntrinsicContentSize()
@@ -73,14 +101,22 @@ open class MessageInputView: UIView, UITextViewDelegate {
     }
     
     // MARK: - Auto-Layout Management
-    
+//    private var topViewLayoutSet: NSLayoutConstraintSet?
+    private var topViewHeightAnchor: NSLayoutConstraint?
+
     private var textViewLayoutSet: NSLayoutConstraintSet?
     private var textViewHeightAnchor: NSLayoutConstraint?
+    
+    private var taggleButtonLayoutSet: NSLayoutConstraintSet?
+    
+    
+    private var tempInputText: String?
     
     
     // MARK: - Life
     public convenience init() {
         self.init(frame: .zero)
+        self.backgroundColor = UIColor.yellow
     }
     
     public override init(frame: CGRect) {
@@ -113,14 +149,28 @@ open class MessageInputView: UIView, UITextViewDelegate {
     private func setupSubviews() {
         addSubview(backgroundView)
         addSubview(inputTextView)
+        addSubview(taggleButton)
+        addSubview(recordButton)
+        addSubview(topView)
     }
     
     /// Sets up the initial constraints of each subview
     private func setupConstraints() {
         
-//        self.translatesAutoresizingMaskIntoConstraints = false
-        backgroundView.addConstraints(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
+        self.translatesAutoresizingMaskIntoConstraints = false
         
+        backgroundView.addConstraints(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
+
+
+//        topView.heightAnchor.constraint(equalToConstant: 36)
+        NSLayoutConstraintSet(
+            top:    topView.topAnchor.constraint(equalTo: topAnchor, constant:0),
+            bottom: topView.bottomAnchor.constraint(equalTo: inputTextView.topAnchor, constant: -6),
+            left:   topView.leftAnchor.constraint(equalTo: leftAnchor, constant: 0),
+            right:  topView.rightAnchor.constraint(equalTo: rightAnchor, constant: 0)
+            ).activate()
+        
+        // textView
         textViewLayoutSet = NSLayoutConstraintSet(
             top:    inputTextView.topAnchor.constraint(equalTo: topAnchor, constant: padding.top),
             bottom: inputTextView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding.bottom),
@@ -128,6 +178,24 @@ open class MessageInputView: UIView, UITextViewDelegate {
             right:  inputTextView.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right)
             ).activate()
         textViewHeightAnchor = inputTextView.heightAnchor.constraint(equalToConstant: maxHeight)
+        
+        // recordButton
+        NSLayoutConstraintSet(
+            top:    recordButton.topAnchor.constraint(equalTo: topAnchor, constant: padding.top),
+//            bottom: recordButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding.bottom),
+            left:   recordButton.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left),
+            right:  recordButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right)
+            ).activate()
+        topViewHeightAnchor = recordButton.heightAnchor.constraint(equalToConstant: 34)
+        topViewHeightAnchor?.isActive = true
+        
+        // taggle button
+        taggleButtonLayoutSet = NSLayoutConstraintSet(
+            bottom: taggleButton.bottomAnchor.constraint(equalTo: inputTextView.bottomAnchor, constant: -3),
+            left:   taggleButton.leftAnchor.constraint(equalTo: leftAnchor, constant: 10)
+            ).activate()
+        
+       
         
     }
     
@@ -216,16 +284,14 @@ open class MessageInputView: UIView, UITextViewDelegate {
     
     
     private func updatePadding() {
-        
         textViewLayoutSet?.top?.constant = padding.top
-//        textViewLayoutSet?.bottom?.constant = -padding.bottom
+        textViewLayoutSet?.bottom?.constant = -padding.bottom
     }
     
     private func updateTextViewPadding() {
         textViewLayoutSet?.left?.constant = textViewPadding.left
         textViewLayoutSet?.right?.constant = -textViewPadding.right
         textViewLayoutSet?.bottom?.constant = -textViewPadding.bottom
-//        textViewLayoutSet?.top?.constant = textViewPadding.top
     }
     
     
@@ -250,7 +316,6 @@ open class MessageInputView: UIView, UITextViewDelegate {
         
         delegate?.messageInputView(self, textViewTextDidChangeTo: trimmedText)
         invalidateIntrinsicContentSize()
-        
     }
     
     @objc
@@ -264,10 +329,44 @@ open class MessageInputView: UIView, UITextViewDelegate {
     }
     
     
+    @objc func taggleAction(sender: UIButton) {
+        
+        if sender.isSelected {
+            self.inputTextView.resignFirstResponder()
+            
+            tempInputText = self.inputTextView.text
+            self.inputTextView.text = nil
+            invalidateIntrinsicContentSize()
+            
+            self.recordButton.isHidden = false
+        } else {
+            self.recordButton.isHidden = true
+            self.inputTextView.text = tempInputText
+            invalidateIntrinsicContentSize()
+            
+            self.inputTextView.becomeFirstResponder()
+        }
+        
+        sender.isSelected = !sender.isSelected
+    }
+    
+    @objc func recordAction() {
+        
+    }
+    
+    public func clearInputText() {
+        self.inputTextView.text = nil
+        self.tempInputText = nil
+    }
+    
     // MARK: - UITextViewDelegate
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
-            self.delegate?.messageInputView(self, didPressSendButtonWith: textView.text)
+            let trimmedText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !trimmedText.isEmpty else { return false }
+            self.delegate?.messageInputView(self, didPressSendButtonWith: trimmedText)
+            self.clearInputText()
+            invalidateIntrinsicContentSize()
             return false
         }
         return true

@@ -15,7 +15,10 @@ class ConversationViewController: MessagesViewController {
 
     let refreshControl = UIRefreshControl()
     
-    var isTyping = false
+    var tipsView: InputTipsView = {
+        let view = InputTipsView.init(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 60))
+        return view
+    }()
 
     
     override func viewDidLoad() {
@@ -65,7 +68,7 @@ class ConversationViewController: MessagesViewController {
 //        messagesCollectionView.insertSections([messages.count - 1])
 //        messagesCollectionView.scrollToBottom()
         
-
+        configTips(items: ["hello"])
     }
     
     
@@ -73,52 +76,28 @@ class ConversationViewController: MessagesViewController {
         
         if items.count == 0 {
             
-            messageInputBar.topStackView.arrangedSubviews.first?.removeFromSuperview()
-            messageInputBar.topStackViewPadding = .zero
+//            messageInputBar.topStackView.arrangedSubviews.first?.removeFromSuperview()
+//            messageInputBar.topStackViewPadding = .zero
             
         } else {
             
-            let label = UILabel()
-            label.backgroundColor = UIColor.yellow
-            label.text = "nathan.tannar is typing..."
-            label.font = UIFont.boldSystemFont(ofSize: 16)
-            messageInputBar.topStackView.addArrangedSubview(label)
+//            let label = UILabel()
+//            label.backgroundColor = UIColor.yellow
+//            label.text = "nathan.tannar is typing..."
+//            label.font = UIFont.boldSystemFont(ofSize: 16)
             
+            tipsView.items = items
             
-            messageInputBar.topStackViewPadding.top = 6
-            messageInputBar.topStackViewPadding.left = 12
-            
-            // The backgroundView doesn't include the topStackView. This is so things in the topStackView can have transparent backgrounds if you need it that way or another color all together
-            messageInputBar.backgroundColor = messageInputBar.backgroundView.backgroundColor
-            
-        }
-        
-    }
-    
-    @objc func handleTyping() {
-        
-        defer {
-            isTyping = !isTyping
-        }
-        
-        if isTyping {
-            
-            messageInputBar.topStackView.arrangedSubviews.first?.removeFromSuperview()
-            messageInputBar.topStackViewPadding = .zero
-            
-        } else {
-            
-            let label = UILabel()
-            label.text = "nathan.tannar is typing..."
-            label.font = UIFont.boldSystemFont(ofSize: 16)
-            messageInputBar.topStackView.addArrangedSubview(label)
-            
-            
-            messageInputBar.topStackViewPadding.top = 6
-            messageInputBar.topStackViewPadding.left = 12
-            
-            // The backgroundView doesn't include the topStackView. This is so things in the topStackView can have transparent backgrounds if you need it that way or another color all together
-            messageInputBar.backgroundColor = messageInputBar.backgroundView.backgroundColor
+//            messageInputBar.topStackView.addArrangedSubview(tipsView)
+//
+//            messageInputBar.topStackViewPadding.top = 6
+//            messageInputBar.topStackViewPadding.left = 12
+//
+//            // The backgroundView doesn't include the topStackView. This is so things in the topStackView can have transparent backgrounds if you need it that way or another color all together
+//            messageInputBar.backgroundColor = messageInputBar.backgroundView.backgroundColor
+//
+//            messageInputBar.topStackView.layoutIfNeeded()
+//            messageInputBar.invalidateIntrinsicContentSize()
             
         }
         
@@ -137,11 +116,11 @@ class ConversationViewController: MessagesViewController {
     }
     
     func defaultStyle() {
-        let newMessageInputBar = MessageInputBar()
-        newMessageInputBar.sendButton.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
-        newMessageInputBar.delegate = self
-        messageInputBar = newMessageInputBar
-        reloadInputViews()
+//        let newMessageInputBar = MessageInputBar()
+//        newMessageInputBar.sendButton.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
+//        newMessageInputBar.delegate = self
+//        messageInputBar = newMessageInputBar
+//        reloadInputViews()
     }
 
 }
@@ -266,12 +245,23 @@ extension ConversationViewController: MessageLabelDelegate {
 }
 
 
-extension ConversationViewController: MessageInputBarDelegate {
-    func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
+//extension ConversationViewController: MessageInputBarDelegate {
+//    func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
+//        let id = UUID().uuidString
+//        let message = AssistantMessage.init(data: .text(text, nil), sender: MessageFactory.shared.currentSender, id: id, date: Date())
+//        messages.append(message)
+//        inputBar.inputTextView.text = String()
+//        messagesCollectionView.insertSections([messages.count - 1])
+//        messagesCollectionView.scrollToBottom()
+//    }
+//}
+
+extension ConversationViewController: MessageInputViewDelegate {
+    func messageInputView(_ inputView: MessageInputView, didPressSendButtonWith text: String) {
         let id = UUID().uuidString
         let message = AssistantMessage.init(data: .text(text, nil), sender: MessageFactory.shared.currentSender, id: id, date: Date())
         messages.append(message)
-        inputBar.inputTextView.text = String()
+        inputView.inputTextView.text = String()
         messagesCollectionView.insertSections([messages.count - 1])
         messagesCollectionView.scrollToBottom()
     }
