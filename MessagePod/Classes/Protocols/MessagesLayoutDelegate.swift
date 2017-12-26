@@ -54,9 +54,9 @@ public extension MessagesLayoutDelegate {
     func messageLabelInset(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets {
         guard let dataSource = messagesCollectionView.messagesDataSource else { return .zero }
         if dataSource.isCurrentSender(message: message) {
-            return UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 18)
+            return UIEdgeInsets(top: 7, left: 8, bottom: 7, right: 14)
         } else {
-            return UIEdgeInsets(top: 7, left: 18, bottom: 7, right: 14)
+            return UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 8)
         }
     }
     

@@ -40,9 +40,9 @@ open class MessageContainerView: UIImageView {
     private func applyMessageStyle() {
         switch style {
         case .bubbleLeft, .bubbleRight:
-            imageMask.image = style.image
+//            imageMask.image = style.image
             sizeMaskToView()
-            mask = imageMask
+//            mask = imageMask
             image = style.image
         case .none:
             mask = nil

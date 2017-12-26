@@ -55,7 +55,6 @@ open class TextMessageCell: MessageCollectionViewCell {
     
     open func setupConstraints() {
         messageLabel.fillSuperview()
-//        messageLabel.addConstraints(messageContainerView.topAnchor, left: messageContainerView.leftAnchor, bottom: messageContainerView.bottomAnchor, right: messageContainerView.rightAnchor, topConstant: textInsets.top, leftConstant: textInsets.left, bottomConstant: textInsets.bottom, rightConstant: textInsets.right)
     }
 
     

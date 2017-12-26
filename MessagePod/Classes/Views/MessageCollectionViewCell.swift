@@ -17,6 +17,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
 
     open var messageContainerView: MessageContainerView = {
         let containerView = MessageContainerView()
+        containerView.isUserInteractionEnabled = true
         containerView.clipsToBounds = true
         containerView.layer.masksToBounds = true
         return containerView

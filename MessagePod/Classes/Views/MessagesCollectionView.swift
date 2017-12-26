@@ -34,9 +34,21 @@ open class MessagesCollectionView: UICollectionView {
         self.init(frame: .zero, collectionViewLayout: MessagesCollectionViewFlowLayout())
     }
     
+//    private var indexPathForLastItem: IndexPath? {
+//        let lastSection = numberOfSections - 1
+//        guard lastSection >= 0, numberOfItems(inSection: lastSection) > 0 else { return nil }
+//        return IndexPath(item: numberOfItems(inSection: lastSection) - 1, section: lastSection)
+//    }
+//
+//    public func scrollToBottom(animated: Bool = false) {
+//        guard let indexPath = indexPathForLastItem else { return }
+//        scrollToItem(at: indexPath, at: .bottom, animated: animated)
+//    }
+    
+    
     public func scrollToBottom(animated: Bool = false) {
         let collectionViewContentHeight = collectionViewLayout.collectionViewContentSize.height
-        
+
         performBatchUpdates(nil) { _ in
             self.scrollRectToVisible(CGRect.init(x: 0.0, y: collectionViewContentHeight - 1.0, width: 1.0, height: 1.0), animated: animated)
         }

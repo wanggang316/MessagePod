@@ -61,8 +61,9 @@ public extension MessagesDisplayDelegate {
     // MARK: - Text Messages Defaults
     
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        guard let dataSource = messagesCollectionView.messagesDataSource else { return .darkText }
-        return dataSource.isCurrentSender(message: message) ? .white : .darkText
+//        guard let dataSource = messagesCollectionView.messagesDataSource else { return .darkText }
+//        return dataSource.isCurrentSender(message: message) ? .white : .darkText
+        return UIColor.init(red: 51.0 / 255.0, green: 51.0 / 255.0, blue: 51.0 / 255.0, alpha: 1.0)
     }
     
     // MARK: - Location Messages Defaults

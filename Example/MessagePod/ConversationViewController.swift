@@ -21,6 +21,8 @@ class ConversationViewController: MessagesViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Add", style: .plain, target: self, action: #selector(addAction))
+        
         self.messagesCollectionView.backgroundColor = UIColor.init(red: 245.0 / 255.0, green: 245.0 / 255.0, blue: 245.0 / 255.0, alpha: 1.0)
         
         DispatchQueue.global(qos: .userInitiated).async {
@@ -53,6 +55,13 @@ class ConversationViewController: MessagesViewController {
         super.didReceiveMemoryWarning()
     }
     
+    
+    @objc func addAction() {
+        let message = MessageFactory.shared.newAttributeMessage()
+        messages.append(message)
+        messagesCollectionView.insertSections([messages.count - 1])
+        messagesCollectionView.scrollToBottom()
+    }
     
     @objc func handleTyping() {
         
@@ -171,14 +180,14 @@ extension ConversationViewController: MessagesLayoutDelegate {
     
     
     func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition {
-        return AvatarPosition(horizontal: .natural, vertical: .messageBottom)
+        return AvatarPosition(horizontal: .natural, vertical: .messageTop)
     }
     
     func messagePadding(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets {
         if isCurrentSender(message: message) {
-            return UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 4)
+            return UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 4)
         } else {
-            return UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 30)
+            return UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 40)
         }
     }
     
@@ -235,20 +244,4 @@ extension ConversationViewController: MessageInputBarDelegate {
         messagesCollectionView.scrollToBottom()
     }
 }
-
-//extension ConversationViewController: MessageInputViewDelegate {
-//
-//    func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
-//        //        messageList.append(MockMessage(text: text, sender: currentSender(), messageId: UUID().uuidString, date: Date()))
-//        //        inputBar.inputTextView.text = String()
-//        //        messagesCollectionView.insertSections([messageList.count - 1])
-//        //        messagesCollectionView.scrollToBottom()
-//
-//    }
-//
-//
-//    func messageInputView(_ inputView: MessageInputView, textViewTextDidChangeTo text: String) {
-//        print(text)
-//    }
-//}
 
