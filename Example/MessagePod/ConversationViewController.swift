@@ -49,6 +49,9 @@ class ConversationViewController: MessagesViewController {
         refreshControl.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
         
         defaultStyle()
+        
+        configTips(items: ["hello"])
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -57,10 +60,39 @@ class ConversationViewController: MessagesViewController {
     
     
     @objc func addAction() {
-        let message = MessageFactory.shared.newAttributeMessage()
-        messages.append(message)
-        messagesCollectionView.insertSections([messages.count - 1])
-        messagesCollectionView.scrollToBottom()
+//        let message = MessageFactory.shared.newAttributeMessage()
+//        messages.append(message)
+//        messagesCollectionView.insertSections([messages.count - 1])
+//        messagesCollectionView.scrollToBottom()
+        
+
+    }
+    
+    
+    func configTips(items: [String]) {
+        
+        if items.count == 0 {
+            
+            messageInputBar.topStackView.arrangedSubviews.first?.removeFromSuperview()
+            messageInputBar.topStackViewPadding = .zero
+            
+        } else {
+            
+            let label = UILabel()
+            label.backgroundColor = UIColor.yellow
+            label.text = "nathan.tannar is typing..."
+            label.font = UIFont.boldSystemFont(ofSize: 16)
+            messageInputBar.topStackView.addArrangedSubview(label)
+            
+            
+            messageInputBar.topStackViewPadding.top = 6
+            messageInputBar.topStackViewPadding.left = 12
+            
+            // The backgroundView doesn't include the topStackView. This is so things in the topStackView can have transparent backgrounds if you need it that way or another color all together
+            messageInputBar.backgroundColor = messageInputBar.backgroundView.backgroundColor
+            
+        }
+        
     }
     
     @objc func handleTyping() {

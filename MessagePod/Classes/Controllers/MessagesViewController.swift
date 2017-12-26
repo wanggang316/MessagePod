@@ -63,12 +63,16 @@ open class MessagesViewController: UIViewController {
         setupConstraints()
         registerReusableViews()
         setupDelegates()
+        
     }
 
     override open func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
+    
     
     open override func viewDidLayoutSubviews() {
         // Hack to prevent animation of the contentInset after viewDidAppear
