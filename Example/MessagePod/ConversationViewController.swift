@@ -8,6 +8,7 @@
 
 import UIKit
 import MessagePod
+import MapKit
 
 class ConversationViewController: MessagesViewController {
     
@@ -86,13 +87,13 @@ class ConversationViewController: MessagesViewController {
     
     
     @objc func addAction() {
-//        let message = MessageFactory.shared.newAttributeMessage()
-//        messages.append(message)
-//        messagesCollectionView.insertSections([messages.count - 1])
-//        messagesCollectionView.scrollToBottom()
+        let message = MessageFactory.shared.randomLocationMessage()
+        messages.append(message)
+        messagesCollectionView.insertSections([messages.count - 1])
+        messagesCollectionView.scrollToBottom()
         
 //        configTips(items: ["hello"])
-        messageInputBar.padding.top =  messageInputBar.padding.top == 6 ? 6 + 36 : 6
+//        messageInputBar.padding.top =  messageInputBar.padding.top == 6 ? 6 + 36 : 6
     }
     
     override func viewDidLayoutSubviews() {
@@ -200,13 +201,13 @@ extension ConversationViewController: MessagesDisplayDelegate {
     
     // MARK: - Location Messages
     
-//    func annotationViewForLocation(message: MessageType, at indexPath: IndexPath, in messageCollectionView: MessagesCollectionView) -> MKAnnotationView? {
-//        let annotationView = MKAnnotationView(annotation: nil, reuseIdentifier: nil)
-//        let pinImage = #imageLiteral(resourceName: "pin")
-//        annotationView.image = pinImage
-//        annotationView.centerOffset = CGPoint(x: 0, y: -pinImage.size.height / 2)
-//        return annotationView
-//    }
+    func annotationViewForLocation(message: MessageType, at indexPath: IndexPath, in messageCollectionView: MessagesCollectionView) -> MKAnnotationView? {
+        let annotationView = MKAnnotationView(annotation: nil, reuseIdentifier: nil)
+        let pinImage = #imageLiteral(resourceName: "map_point")
+        annotationView.image = pinImage
+        annotationView.centerOffset = CGPoint(x: 0, y: -pinImage.size.height / 2)
+        return annotationView
+    }
 //
 //    func animationBlockForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> ((UIImageView) -> Void)? {
 //        return { view in
@@ -234,9 +235,19 @@ extension ConversationViewController: MessagesLayoutDelegate {
     
     func messagePadding(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets {
         if isCurrentSender(message: message) {
-            return UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 4)
+            switch message.data {
+            case .text(_, _):
+                return UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 4)
+            case .location(_, _, _):
+                return UIEdgeInsets(top: 0, left: 40 + 25, bottom: 0, right: 4)
+            }
         } else {
-            return UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 40)
+            switch message.data {
+            case .text(_, _):
+                return UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 40)
+            case .location(_, _, _):
+                return UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 40 + 25)
+            }
         }
     }
     
@@ -262,9 +273,13 @@ extension ConversationViewController: MessagesLayoutDelegate {
     }
     
     // MARK: - Location Messages
-    
+//    func widthForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+//        return 250
+//    }
     func heightForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        return 200
+        guard case let .location(_, address, _) = message.data else { fatalError("") }
+        let labelHeight = address.height(considering: maxWidth - 18, and: UIFont.systemFont(ofSize: 13))
+        return 120 + labelHeight + 8
     }
     
 }

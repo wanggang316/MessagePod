@@ -7,9 +7,9 @@
 
 import Foundation
 
-extension String {
+public extension String {
     
-    func height(considering width: CGFloat, and font: UIFont) -> CGFloat {
+    public func height(considering width: CGFloat, and font: UIFont) -> CGFloat {
         
         let constraintBox = CGSize(width: width, height: .greatestFiniteMagnitude)
         let rect = self.boundingRect(with: constraintBox, options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: font], context: nil)
@@ -17,7 +17,7 @@ extension String {
         
     }
     
-    func width(considering height: CGFloat, and font: UIFont) -> CGFloat {
+    public func width(considering height: CGFloat, and font: UIFont) -> CGFloat {
         
         let constraintBox = CGSize(width: .greatestFiniteMagnitude, height: height)
         let rect = self.boundingRect(with: constraintBox, options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: font], context: nil)

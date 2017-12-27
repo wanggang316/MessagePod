@@ -77,7 +77,12 @@ public extension MessagesDisplayDelegate {
     }
     
     func animationBlockForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> ((UIImageView) -> Void)? {
-        return nil
+        return { view in
+//            view.alpha = 0.0
+//            UIView.animate(withDuration: 0.5, animations: {
+//                view.alpha = 1.0
+//            })
+        }
     }
 
 }

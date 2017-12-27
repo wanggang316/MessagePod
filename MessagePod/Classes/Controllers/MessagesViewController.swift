@@ -102,7 +102,7 @@ open class MessagesViewController: UIViewController {
         
         messagesCollectionView.register(TextMessageCell.self)
 //        messagesCollectionView.register(MediaMessageCell.self)
-//        messagesCollectionView.register(LocationMessageCell.self)
+        messagesCollectionView.register(LocationMesssageCell.self)
         
         messagesCollectionView.register(MessageFooterView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter)
         messagesCollectionView.register(MessageHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader)
@@ -211,7 +211,7 @@ extension MessagesViewController: UICollectionViewDataSource {
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
         case .location(_, _, _):
-            let cell = messagesCollectionView.dequeueReusableCell(TextMessageCell.self, for: indexPath)
+            let cell = messagesCollectionView.dequeueReusableCell(LocationMesssageCell.self, for: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
         }

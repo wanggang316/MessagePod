@@ -8,6 +8,7 @@
 
 import Foundation
 import MessagePod
+import CoreLocation
 
 final class MessageFactory {
 
@@ -93,11 +94,11 @@ final class MessageFactory {
     
     
     lazy var amessages: [AssistantMessage] = [
-        AssistantMessage(data: MessageData.text("本项目并非 Google 官方项目, @而是由国内程序员凭热情创建和维护", ["程序员": "http://www.google.com"]), sender: incommingSender, id: "1", date: Date()),
-        AssistantMessage(data: MessageData.text("如果你关注的是 Google 官方英文版", ["英文": "guanyu://page.gy/dbf"]), sender: outgoingSender, id: "2", date: Date()),
-        AssistantMessage(data: MessageData.text("每个较大的开源项目都有自己的风格指南: #关于 如何为该项目编写代码的一系列约定 (有时候会比较武断). 当所有代码均保持一致的风格, 在理解大型代码库时更为轻松", nil), sender: outgoingSender, id: "3", date: Date()),
-        AssistantMessage(data: MessageData.text("\"风格\" 的含义涵盖范围广, 从 \"变量使用驼峰格式 (camelCase)\" 到 \"决不使用全局变量\" 再到 \"决不使用异常\". 英文版项目维护的是在 Google 使用的编程风格指南. 如果你正在修改的项目源自 Google, 你可能会被引导至 英文版项目页面, 以了解项目所使用的风格.", ["camelCase": "guanyu://page.gy/ddddd", "使用": "abcd"]), sender: outgoingSender, id: "4", date: Date()),
-        AssistantMessage(data: MessageData.text("Google C++ 风格指南是的哈哈哈哈哈", nil), sender: outgoingSender, id: "5", date: Date())
+        AssistantMessage(data: MessageData.text("本项目并非 Google 官方项目, @而是由国内程序员凭热情创建和维护", ["程序员": "http://www.google.com"]), sender: incommingSender, id: NSUUID().uuidString, date: Date()),
+        AssistantMessage(data: MessageData.text("如果你关注的是 Google 官方英文版", ["英文": "guanyu://page.gy/dbf"]), sender: outgoingSender, id: NSUUID().uuidString, date: Date()),
+        AssistantMessage(data: MessageData.text("每个较大的开源项目都有自己的风格指南: #关于 如何为该项目编写代码的一系列约定 (有时候会比较武断). 当所有代码均保持一致的风格, 在理解大型代码库时更为轻松", nil), sender: outgoingSender, id: NSUUID().uuidString, date: Date()),
+        AssistantMessage(data: MessageData.text("\"风格\" 的含义涵盖范围广, 从 \"变量使用驼峰格式 (camelCase)\" 到 \"决不使用全局变量\" 再到 \"决不使用异常\". 英文版项目维护的是在 Google 使用的编程风格指南. 如果你正在修改的项目源自 Google, 你可能会被引导至 英文版项目页面, 以了解项目所使用的风格.", ["camelCase": "guanyu://page.gy/ddddd", "使用": "abcd"]), sender: outgoingSender, id: NSUUID().uuidString, date: Date()),
+        AssistantMessage(data: MessageData.text("Google C++ 风格指南是的哈哈哈哈哈", nil), sender: outgoingSender, id: NSUUID().uuidString, date: Date())
     ]
     
     static func attributeString(for text: String) -> NSAttributedString {
@@ -106,6 +107,18 @@ final class MessageFactory {
         atrributeString.addAttribute(NSAttributedStringKey.font, value: UIFont.systemFont(ofSize: 14), range: range)
         atrributeString.addAttribute(.link, value: UIFont.systemFont(ofSize: 14), range: range)
         return atrributeString
+    }
+    
+    // MARK: - Location message
+    lazy var locationMessages: [AssistantMessage] = [
+        AssistantMessage(data: MessageData.location("冠寓酒仙桥店", "留下街道留和路58号4号楼", CLLocation(latitude: 39.975315, longitude: 116.499705)), sender: incommingSender, id: NSUUID().uuidString, date: Date()),
+        AssistantMessage(data: MessageData.location("冠寓成都时代店", "成都市高新西区合作路89号龙湖时代天街8栋", CLLocation(latitude: 30.753678, longitude: 103.919879)), sender: incommingSender, id: NSUUID().uuidString, date: Date()),
+        AssistantMessage(data: MessageData.location("冠寓重庆佰乐街店", "重庆市渝北区红金路41号龙湖佰乐街3栋4-7层", CLLocation(latitude: 29.587609, longitude: 106.527832)), sender: incommingSender, id: NSUUID().uuidString, date: Date()),
+    ]
+    
+    func randomLocationMessage() -> AssistantMessage {
+        let randomNumberLocation = Int(arc4random_uniform(UInt32(locationMessages.count)))
+        return locationMessages[randomNumberLocation]
     }
     
     

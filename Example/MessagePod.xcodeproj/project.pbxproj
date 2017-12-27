@@ -46,7 +46,6 @@
 		234F56661FF23A5200F74095 /* ConstraintLayoutSupportDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234F56421FF23A5200F74095 /* ConstraintLayoutSupportDSL.swift */; };
 		234F56671FF23A5200F74095 /* ConstraintMakerRelatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234F56431FF23A5200F74095 /* ConstraintMakerRelatable.swift */; };
 		234F56681FF23A5200F74095 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 234F56441FF23A5200F74095 /* README.md */; };
-		234F56781FF2BD8600F74095 /* InfiniteCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234F56771FF2BD8500F74095 /* InfiniteCollectionView.swift */; };
 		2355C26D1FF1695000CF9455 /* AssistantMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2355C26C1FF1695000CF9455 /* AssistantMessage.swift */; };
 		23E1EB021FEBBC4300A8F98B /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23E1EB011FEBBC4300A8F98B /* MobileCoreServices.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
@@ -111,7 +110,6 @@
 		234F56421FF23A5200F74095 /* ConstraintLayoutSupportDSL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstraintLayoutSupportDSL.swift; sourceTree = "<group>"; };
 		234F56431FF23A5200F74095 /* ConstraintMakerRelatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstraintMakerRelatable.swift; sourceTree = "<group>"; };
 		234F56441FF23A5200F74095 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		234F56771FF2BD8500F74095 /* InfiniteCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfiniteCollectionView.swift; sourceTree = "<group>"; };
 		2355C26C1FF1695000CF9455 /* AssistantMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssistantMessage.swift; sourceTree = "<group>"; };
 		23E1EB011FEBBC4300A8F98B /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		276C8533C1213C36327B8BF0 /* Pods_MessagePod_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MessagePod_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -239,7 +237,6 @@
 		607FACD21AFB9204008FA782 /* Example for MessagePod */ = {
 			isa = PBXGroup;
 			children = (
-				234F56771FF2BD8500F74095 /* InfiniteCollectionView.swift */,
 				234F561F1FF23A5200F74095 /* SnapKit */,
 				2329E8F61FE4D146001CD3AA /* ConversationViewController.swift */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
@@ -532,7 +529,6 @@
 				234F56611FF23A5200F74095 /* Constraint.swift in Sources */,
 				234F565C1FF23A5200F74095 /* ConstraintMaker.swift in Sources */,
 				234F56581FF23A5200F74095 /* Typealiases.swift in Sources */,
-				234F56781FF2BD8600F74095 /* InfiniteCollectionView.swift in Sources */,
 				2338145D1FF20C9700FC42EC /* InputTipsView.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
