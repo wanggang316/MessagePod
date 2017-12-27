@@ -38,12 +38,21 @@ open class LocationMesssageCell: MessageCollectionViewCell {
     
     open func setupConstraints() {
         imageView.addConstraints(messageContainerView.topAnchor, left: messageContainerView.leftAnchor, right: messageContainerView.rightAnchor, topConstant: 0, leftConstant: 0, rightConstant: 0, heightConstant: 120)
-        addressLabel.addConstraints(imageView.bottomAnchor, left: messageContainerView.leftAnchor, right: messageContainerView.rightAnchor, topConstant: 4, leftConstant: 12, rightConstant: 6)
+        addressLabel.addConstraints(imageView.bottomAnchor, left: messageContainerView.leftAnchor, right: messageContainerView.rightAnchor, topConstant: 8, leftConstant: 12, rightConstant: 6)
         activityIndicator.centerInSuperview()
     }
     
     open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
+        
+        guard case let .location(title, address, location) = message.data else { fatalError("") }
+        
+        addressLabel.text = address
+
+        if let cachedImage = MemoryCacheManager.shared.cachedImage(for: message.id) {
+            self.imageView.image = cachedImage
+            return
+        }
         
         guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
             fatalError("MessagesDisplayDelegate is not set.")
@@ -52,10 +61,6 @@ open class LocationMesssageCell: MessageCollectionViewCell {
         let options = displayDelegate.snapshotOptionsForLocation(message: message, at: indexPath, in: messagesCollectionView)
         let annotationView = displayDelegate.annotationViewForLocation(message: message, at: indexPath, in: messagesCollectionView)
         let animationBlock = displayDelegate.animationBlockForLocation(message: message, at: indexPath, in: messagesCollectionView)
-        
-        guard case let .location(title, address, location) = message.data else { fatalError("") }
-
-        addressLabel.text = address
         
         if self.imageView.image == nil {
             activityIndicator.startAnimating()
@@ -77,6 +82,7 @@ open class LocationMesssageCell: MessageCollectionViewCell {
             
             guard let annotationView = annotationView else {
                 self.imageView.image = snapshot.image
+                MemoryCacheManager.shared.cache(snapshot.image, for: message.id)
                 return
             }
             
@@ -97,6 +103,9 @@ open class LocationMesssageCell: MessageCollectionViewCell {
             UIGraphicsEndImageContext()
             self.imageView.image = composedImage
             animationBlock?(self.imageView)
+            if let composedImage = composedImage {
+                MemoryCacheManager.shared.cache(composedImage, for: message.id)
+            }
         }
 
 

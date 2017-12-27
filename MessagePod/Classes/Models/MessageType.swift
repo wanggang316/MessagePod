@@ -11,7 +11,7 @@ public protocol MessageType {
     
     var sender: Sender { get }
     var id: String { get }
-    var data: MessageData { get }
+    var data: MessageData { get set }
     var date: Date { get }
     
 }

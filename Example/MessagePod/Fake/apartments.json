@@ -1,0 +1,103 @@
+{
+    "meta": {
+        "message": "请求成功！"
+    },
+    "data": [
+             {
+             "id": "71",
+             "name": "冠寓成都时代店",
+             "imgUrl": "http://guanyuoss.oss-cn-qingdao.aliyuncs.com/prod/project/USKSf7N2uQg.jpg?x-oss-process=image/resize,h_450,w_650",
+             "price": "1546",
+             "roomTypeCount": "3",
+             "minArea": "48.57",
+             "roomCount": "334",
+             "lat": "30.753678",
+             "lon": "103.919879",
+             "status": true
+             },
+             {
+             "id": "72",
+             "name": "冠寓成都金楠天街店",
+             "imgUrl": "http://guanyuoss.oss-cn-qingdao.aliyuncs.com/prod/project/yju5pjx7ha8.jpg?x-oss-process=image/resize,h_450,w_650",
+             "price": "2020",
+             "roomTypeCount": "5",
+             "minArea": "37.2",
+             "roomCount": "206",
+             "lat": "30.64799",
+             "lon": "103.993287",
+             "status": true
+             },
+             {
+             "id": "92",
+             "name": "冠寓成都赞城店",
+             "imgUrl": "http://guanyuoss.oss-cn-qingdao.aliyuncs.com/prod/project/lWtrt2l_7YY.jpg?x-oss-process=image/resize,h_450,w_650",
+             "price": "2100",
+             "roomTypeCount": "6",
+             "minArea": "22.0",
+             "roomCount": "160",
+             "lat": "30.706756",
+             "lon": "103.99953",
+             "status": true
+             },
+             {
+             "id": "93",
+             "name": "冠寓成都丽都店",
+             "imgUrl": "http://guanyuoss.oss-cn-qingdao.aliyuncs.com/prod/project/Z6P_Bl6-A9I.jpg?x-oss-process=image/resize,h_450,w_650",
+             "price": "2622",
+             "roomTypeCount": "11",
+             "minArea": "25.0",
+             "roomCount": "113",
+             "lat": "30.624144",
+             "lon": "104.031989",
+             "status": true
+             },
+             {
+             "id": "111",
+             "name": "冠寓成都解放路店",
+             "imgUrl": "http://guanyuoss.oss-cn-qingdao.aliyuncs.com/prod/project/NQrmIfT9opk.jpg?x-oss-process=image/resize,h_450,w_650",
+             "price": "2110",
+             "roomTypeCount": "3",
+             "minArea": "24.0",
+             "roomCount": "1134",
+             "lat": "30.691516",
+             "lon": "104.091648",
+             "status": false
+             },
+             {
+             "id": "112",
+             "name": "冠寓成都软件园店",
+             "imgUrl": "http://guanyuoss.oss-cn-qingdao.aliyuncs.com/prod/project/myHOHUEvTlI.jpg?x-oss-process=image/resize,h_450,w_650",
+             "price": "2198",
+             "roomTypeCount": "25",
+             "minArea": "16.0",
+             "roomCount": "341",
+             "lat": "30.551661",
+             "lon": "104.098169",
+             "status": false
+             },
+             {
+             "id": "113",
+             "name": "冠寓成都天府广场店",
+             "imgUrl": "http://guanyuoss.oss-cn-qingdao.aliyuncs.com/prod/project/DtdJI-zV1JI.jpg?x-oss-process=image/resize,h_450,w_650",
+             "price": "2710",
+             "roomTypeCount": "6",
+             "minArea": "17.4",
+             "roomCount": "846",
+             "lat": "30.673445",
+             "lon": "104.076672",
+             "status": false
+             },
+             {
+             "id": "114",
+             "name": "冠寓成都营门口店",
+             "imgUrl": "http://guanyuoss.oss-cn-qingdao.aliyuncs.com/prod/project/GISQ76L75KE.jpg?x-oss-process=image/resize,h_450,w_650",
+             "price": "1698",
+             "roomTypeCount": "6",
+             "minArea": "20.0",
+             "roomCount": "135",
+             "lat": "30.690857",
+             "lon": "104.048522",
+             "status": false
+             }
+             ]
+}

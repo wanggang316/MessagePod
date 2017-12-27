@@ -265,6 +265,8 @@ private extension MessagesCollectionViewFlowLayout {
             return itemWidth - attributes.avatarSize.width - attributes.messageHorizontalPadding - attributes.messageLabelHorizontalInsets
         case .location(_, _, _):
              return itemWidth - attributes.avatarSize.width - attributes.messageHorizontalPadding
+        case .custom(_):
+            return itemWidth
         }
     }
     
@@ -284,6 +286,10 @@ private extension MessagesCollectionViewFlowLayout {
         case .location(_, _, _):
             let width = messagesLayoutDelegate.widthForLocation(message: message, at: indexPath, with: maxWidth, in: messagesCollectionView)
             let height = messagesLayoutDelegate.heightForLocation(message: message, at: indexPath, with: maxWidth, in: messagesCollectionView)
+            messageContainerSize = CGSize(width: width, height: height)
+        case .custom(_):
+            let width = messagesLayoutDelegate.widthForCustomView(message: message, at: indexPath, with: maxWidth, in: messagesCollectionView)
+            let height = messagesLayoutDelegate.heightForCustomView(message: message, at: indexPath, with: maxWidth, in: messagesCollectionView)
             messageContainerSize = CGSize(width: width, height: height)
         }
         return messageContainerSize

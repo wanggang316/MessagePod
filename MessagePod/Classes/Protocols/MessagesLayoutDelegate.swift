@@ -34,6 +34,10 @@ public protocol MessagesLayoutDelegate: AnyObject {
     func widthForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat
     func heightForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat
 
+    func widthForCustomView(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat
+    func heightForCustomView(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat
+
+    
     /// should cache
     func shouldCacheLayoutAttributes(for message: MessageType) -> Bool
 
@@ -94,6 +98,15 @@ public extension MessagesLayoutDelegate {
     func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
         return .zero
     }
+    
+    // MARK: - custom
+    func widthForCustomView(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 0
+    }
+    func heightForCustomView(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 0
+    }
+
     
     // MARK: - Cache
     func shouldCacheLayoutAttributes(for message: MessageType) -> Bool {

@@ -11,4 +11,5 @@ import CoreLocation
 public enum MessageData {
     case text(String, [String: String]?)
     case location(String, String, CLLocation)
+    case custom(Any)
 }

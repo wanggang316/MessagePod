@@ -44,6 +44,7 @@
 		2301D63A3DFF6FD5174CF9528FC8E56C /* UIView+YYText.m in Sources */ = {isa = PBXBuildFile; fileRef = 255179DE9950DB22A7A8E9C7D3467343 /* UIView+YYText.m */; };
 		234F56721FF23CB300F74095 /* MessagePodAssets.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 234F56711FF23CB300F74095 /* MessagePodAssets.bundle */; };
 		234F567A1FF33A0E00F74095 /* LocationMesssageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234F56791FF33A0E00F74095 /* LocationMesssageCell.swift */; };
+		23CAA2841FF3EFF000869D18 /* MemoryCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CAA2831FF3EFF000869D18 /* MemoryCacheManager.swift */; };
 		23CCCB988A6F64934B216069B06BD456 /* Quick.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D60F2E5B1596B56E6393E3AF71F731D /* Quick.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		25D1805055756CAA69A167CA03B2465C /* ContainElementSatisfying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6559D436836532EB37FAB04D978D035C /* ContainElementSatisfying.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		25D977E49A2DB436BE124A0864E783EC /* Behavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6539140D6E87A0C8D1C185BD268631 /* Behavior.swift */; };
@@ -373,6 +374,7 @@
 		233437925B6FF8389038A571A0C41B7E /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Accelerate.framework; sourceTree = DEVELOPER_DIR; };
 		234F56711FF23CB300F74095 /* MessagePodAssets.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MessagePodAssets.bundle; sourceTree = "<group>"; };
 		234F56791FF33A0E00F74095 /* LocationMesssageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationMesssageCell.swift; sourceTree = "<group>"; };
+		23CAA2831FF3EFF000869D18 /* MemoryCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryCacheManager.swift; sourceTree = "<group>"; };
 		246DDC67D96AE4A650DAB14A1DCDAD81 /* ConstraintDSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintDSL.swift; path = Source/ConstraintDSL.swift; sourceTree = "<group>"; };
 		255179DE9950DB22A7A8E9C7D3467343 /* UIView+YYText.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIView+YYText.m"; path = "YYText/Utility/UIView+YYText.m"; sourceTree = "<group>"; };
 		271A3EA44F8F433618698CFF181CFF2E /* Callsite.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Callsite.swift; path = Sources/Quick/Callsite.swift; sourceTree = "<group>"; };
@@ -815,6 +817,7 @@
 				54A849BB699AAB8DD93D78A3DD2D7FDE /* MessageStyle.swift */,
 				03E7A3742EE9423222436DA3C0536C74 /* MessageType.swift */,
 				39E28A08334D8774C2834B0217B65231 /* Sender.swift */,
+				23CAA2831FF3EFF000869D18 /* MemoryCacheManager.swift */,
 			);
 			name = Models;
 			path = MessagePod/Classes/Models;
@@ -1813,6 +1816,7 @@
 				76EFC383DDE871AC3568C250DBCC022D /* TextMessageCell.swift in Sources */,
 				14904351B6712492332AE8FEFB107662 /* UICollectionViewExtension.swift in Sources */,
 				9E8541E04ADD6DF650D7B9AFE4EE07DA /* UIColorExtension.swift in Sources */,
+				23CAA2841FF3EFF000869D18 /* MemoryCacheManager.swift in Sources */,
 				72B349226E8303ADD7AC7D4D6C62AD96 /* UIViewExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

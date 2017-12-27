@@ -122,6 +122,30 @@ final class MessageFactory {
     }
     
     
+    // MARK: - Custom message
+    var apartments: [Apartment] = {
+        let data = FooData.apartments()!["data"] as? [Any]
+        let apartments = Apartment.apartments(with: data!)
+        return apartments
+    }()
+    
+    var apartments1: [Apartment] = {
+        let data = FooData.apartments1()!["data"] as? [Any]
+        let apartments = Apartment.apartments(with: data!)
+        return apartments
+    }()
+    lazy var apartmentsMessages: [AssistantMessage] = [
+        AssistantMessage(data: MessageData.custom(apartments), sender: incommingSender, id: NSUUID().uuidString, date: Date()),
+        AssistantMessage(data: MessageData.custom(apartments1), sender: incommingSender, id: NSUUID().uuidString, date: Date())
+        ]
+    
+    
+    func randomCustomMessage() -> AssistantMessage {
+        let randomNumber = Int(arc4random_uniform(UInt32(apartmentsMessages.count)))
+        return apartmentsMessages[randomNumber]
+    }
+    
+    
     // MARK: - tips data
     let tips: [String] =  ["我要租房", "预约看房dd", "故障报修是的", "社区", "联系管家", "搭小寓", "咨询其它问题"]
     

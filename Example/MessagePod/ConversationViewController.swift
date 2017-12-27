@@ -38,7 +38,10 @@ class ConversationViewController: MessagesViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Add", style: .plain, target: self, action: #selector(addAction))
+        let addItem = UIBarButtonItem.init(title: "Map", style: .plain, target: self, action: #selector(addAction))
+        let addCustomMessageItem = UIBarButtonItem.init(title: "Custom", style: .plain, target: self, action: #selector(addCustomMessageAction))
+
+        self.navigationItem.rightBarButtonItems = [addCustomMessageItem, addItem]
         
         self.messagesCollectionView.backgroundColor = UIColor.init(red: 245.0 / 255.0, green: 245.0 / 255.0, blue: 245.0 / 255.0, alpha: 1.0)
         
@@ -52,7 +55,8 @@ class ConversationViewController: MessagesViewController {
             }
         }
         
-        
+        messagesCollectionView.register(CustomCardMessageCell.self)
+
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
@@ -65,20 +69,14 @@ class ConversationViewController: MessagesViewController {
         messagesCollectionView.addSubview(refreshControl)
         refreshControl.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
         
-        defaultStyle()
-        
-        
         messageInputBar.topView.addSubview(tipsView)
 
-        
         tipsView.translatesAutoresizingMaskIntoConstraints = false
         tipsView.snp.makeConstraints { make in
             make.edges.equalTo(messageInputBar.topView)
         }
         
-        configTips(items: ["我要租房", "预约看房", "故障报修", "社区攻略", "联系管家", "勾搭小寓", "咨询其它问题"])
-//        configTips(items: ["我要租房"])
-
+        tipsView.items = ["我要租房", "预约看房", "故障报修", "社区攻略", "联系管家", "勾搭小寓", "咨询其它问题"]
     }
 
     override func didReceiveMemoryWarning() {
@@ -91,56 +89,19 @@ class ConversationViewController: MessagesViewController {
         messages.append(message)
         messagesCollectionView.insertSections([messages.count - 1])
         messagesCollectionView.scrollToBottom()
-        
-//        configTips(items: ["hello"])
-//        messageInputBar.padding.top =  messageInputBar.padding.top == 6 ? 6 + 36 : 6
+    }
+    
+    @objc func addCustomMessageAction() {
+        let message = MessageFactory.shared.randomCustomMessage()
+        messages.append(message)
+        messagesCollectionView.insertSections([messages.count - 1])
+        messagesCollectionView.scrollToBottom()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-
-//        tipsView.topAnchor.constraint(equalTo: messageInputBar.topView.topAnchor, constant: 0).isActive = true
-//        tipsView.bottomAnchor.constraint(equalTo: messageInputBar.topView.bottomAnchor, constant: 0).isActive = true
-//        tipsView.leadingAnchor.constraint(equalTo: messageInputBar.topView.leadingAnchor, constant: 0).isActive = true
-//        tipsView.trailingAnchor.constraint(equalTo: messageInputBar.topView.trailingAnchor, constant: 0).isActive = true
-        
     }
-    
-    func configTips(items: [String]) {
-        
-        
-        
-  
-        tipsView.items = items
 
-        
-        if items.count == 0 {
-            
-//            messageInputBar.topStackView.arrangedSubviews.first?.removeFromSuperview()
-//            messageInputBar.topStackViewPadding = .zero
-            
-        } else {
-            
-//            let label = UILabel()
-//            label.backgroundColor = UIColor.yellow
-//            label.text = "nathan.tannar is typing..."
-//            label.font = UIFont.boldSystemFont(ofSize: 16)
-            
-            
-//            messageInputBar.topStackView.addArrangedSubview(tipsView)
-//
-//            messageInputBar.topStackViewPadding.top = 6
-//            messageInputBar.topStackViewPadding.left = 12
-//
-//            // The backgroundView doesn't include the topStackView. This is so things in the topStackView can have transparent backgrounds if you need it that way or another color all together
-//            messageInputBar.backgroundColor = messageInputBar.backgroundView.backgroundColor
-//
-//            messageInputBar.topStackView.layoutIfNeeded()
-//            messageInputBar.invalidateIntrinsicContentSize()
-            
-        }
-        
-    }
     
     @objc func loadMoreMessages() {
         DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: DispatchTime.now() + 4) {
@@ -152,14 +113,6 @@ class ConversationViewController: MessagesViewController {
                 }
             }
         }
-    }
-    
-    func defaultStyle() {
-//        let newMessageInputBar = MessageInputBar()
-//        newMessageInputBar.sendButton.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
-//        newMessageInputBar.delegate = self
-//        messageInputBar = newMessageInputBar
-//        reloadInputViews()
     }
 
 }
@@ -188,6 +141,35 @@ extension ConversationViewController: MessagesDataSource {
         return nil
     }
     
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
+            fatalError("Managed collectionView: \(collectionView.debugDescription) is not a MessagesCollectionView.")
+        }
+        
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
+            fatalError("MessagesDataSource has not been set.")
+        }
+        
+        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+        
+        
+        switch message.data {
+        case .text(_, _):
+            let cell = messagesCollectionView.dequeueReusableCell(TextMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .location(_, _, _):
+            let cell = messagesCollectionView.dequeueReusableCell(LocationMesssageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .custom(_):
+            let cell = messagesCollectionView.dequeueReusableCell(CustomCardMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        }
+    }
+    
 }
 
 
@@ -208,17 +190,16 @@ extension ConversationViewController: MessagesDisplayDelegate {
         annotationView.centerOffset = CGPoint(x: 0, y: -pinImage.size.height / 2)
         return annotationView
     }
-//
-//    func animationBlockForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> ((UIImageView) -> Void)? {
-//        return { view in
-//            view.layer.transform = CATransform3DMakeScale(0, 0, 0)
-//            view.alpha = 0.0
-//            UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: [], animations: {
-//                view.layer.transform = CATransform3DIdentity
-//                view.alpha = 1.0
-//            }, completion: nil)
-//        }
-//    }
+    
+    func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
+        switch message.data {
+        case .custom(_):
+            return .custom({ _ in })
+        default:
+            guard let dataSource = messagesCollectionView.messagesDataSource else { return .none }
+            return dataSource.isCurrentSender(message: message) ? .bubbleRight : .bubbleLeft
+        }
+    }
 }
 
 
@@ -227,10 +208,17 @@ extension ConversationViewController: MessagesDisplayDelegate {
 
 extension ConversationViewController: MessagesLayoutDelegate {
 
-    
-    
     func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition {
         return AvatarPosition(horizontal: .natural, vertical: .messageTop)
+    }
+    
+    func avatarSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
+        switch message.data {
+        case .custom(_):
+            return .zero
+        default:
+            return CGSize.init(width: 30, height: 30)
+        }
     }
     
     func messagePadding(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets {
@@ -240,6 +228,8 @@ extension ConversationViewController: MessagesLayoutDelegate {
                 return UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 4)
             case .location(_, _, _):
                 return UIEdgeInsets(top: 0, left: 40 + 25, bottom: 0, right: 4)
+            case .custom(_):
+                return UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
             }
         } else {
             switch message.data {
@@ -247,6 +237,8 @@ extension ConversationViewController: MessagesLayoutDelegate {
                 return UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 40)
             case .location(_, _, _):
                 return UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 40 + 25)
+            case .custom(_):
+                return UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
             }
         }
     }
@@ -279,8 +271,27 @@ extension ConversationViewController: MessagesLayoutDelegate {
     func heightForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
         guard case let .location(_, address, _) = message.data else { fatalError("") }
         let labelHeight = address.height(considering: maxWidth - 18, and: UIFont.systemFont(ofSize: 13))
-        return 120 + labelHeight + 8
+        return 120 + labelHeight + 8 * 2
     }
+    
+    
+    func widthForCustomView(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return UIScreen.main.bounds.width - 26
+    }
+    func heightForCustomView(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        guard case let .custom(data) = message.data else { fatalError("") }
+        if let items = data as? [Apartment] {
+            if items.count >= 2 {
+                return 200 + 5 + 48
+            } else if items.count == 1 {
+                return 100 + 5 + 5
+            } else {
+                return 0
+            }
+        }
+        return 0
+    }
+
     
 }
 
@@ -294,20 +305,8 @@ extension ConversationViewController: MessageCellDelegate {
 // MARK: - MessageLabelDelegate
 
 extension ConversationViewController: MessageLabelDelegate {
-    
 }
 
-
-//extension ConversationViewController: MessageInputBarDelegate {
-//    func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
-//        let id = UUID().uuidString
-//        let message = AssistantMessage.init(data: .text(text, nil), sender: MessageFactory.shared.currentSender, id: id, date: Date())
-//        messages.append(message)
-//        inputBar.inputTextView.text = String()
-//        messagesCollectionView.insertSections([messages.count - 1])
-//        messagesCollectionView.scrollToBottom()
-//    }
-//}
 
 extension ConversationViewController: MessageInputViewDelegate {
     func messageInputView(_ inputView: MessageInputView, didPressSendButtonWith text: String) {

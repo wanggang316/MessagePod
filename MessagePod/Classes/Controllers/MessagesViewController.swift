@@ -101,7 +101,7 @@ open class MessagesViewController: UIViewController {
     private func registerReusableViews() {
         
         messagesCollectionView.register(TextMessageCell.self)
-//        messagesCollectionView.register(MediaMessageCell.self)
+        messagesCollectionView.register(MessageCollectionViewCell.self)
         messagesCollectionView.register(LocationMesssageCell.self)
         
         messagesCollectionView.register(MessageFooterView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter)
@@ -212,6 +212,10 @@ extension MessagesViewController: UICollectionViewDataSource {
             return cell
         case .location(_, _, _):
             let cell = messagesCollectionView.dequeueReusableCell(LocationMesssageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .custom(_):
+            let cell = messagesCollectionView.dequeueReusableCell(MessageCollectionViewCell.self, for: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
         }

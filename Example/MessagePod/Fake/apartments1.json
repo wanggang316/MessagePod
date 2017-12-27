@@ -1,0 +1,19 @@
+{
+    "meta": {
+        "message": "请求成功！"
+    },
+    "data": [
+             {
+             "id": "87",
+             "name": "冠寓重庆佰乐街店",
+             "imgUrl": "http://guanyuoss.oss-cn-qingdao.aliyuncs.com/prod/project/Jpzh2sCyRLc.jpg?x-oss-process=image/resize,h_450,w_650",
+             "price": "1878",
+             "roomTypeCount": "3",
+             "minArea": "22.4",
+             "roomCount": "270",
+             "lat": "29.587609",
+             "lon": "106.527832",
+             "status": true
+             }
+             ]
+}
